@@ -1,6 +1,9 @@
 package com.minakov.servlet;
 
 
+import com.minakov.database.DBManager;
+import com.minakov.database.entity.User;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,10 +17,6 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //List<String> list = new ArrayList<>();
-        //list.add("SOSI");
-        //list.add("SOSER");
-        //String string = "SOSI";
         req.setAttribute("key", string);
         req.getRequestDispatcher("/WEB-INF/view/index.jsp").forward(req, resp);
 
@@ -25,9 +24,8 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-
         resp.setCharacterEncoding("UTF-8");
-        switch (req.getParameter("name")) {
+/*        switch (req.getParameter("name")) {
             case ("customer"):
 //                resp.sendRedirect(req.getContextPath() + "/customer");
                 string = "customer";
@@ -36,7 +34,9 @@ public class LoginServlet extends HttpServlet {
 //                resp.sendRedirect(req.getContextPath() + "/admin");
                 string = "admin";
                 break;
-        }
+        }*/
+        User user = DBManager.getInstance().getUser(req.getParameter("phone"));
+        req.setAttribute("user", user.getFirstName());
         try {
             doGet(req, resp);
         } catch (ServletException e) {
