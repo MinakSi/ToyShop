@@ -13,11 +13,10 @@ import java.io.IOException;
 
 public class LoginServlet extends HttpServlet {
 
-    private String string;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("key", string);
+
         req.getRequestDispatcher("/WEB-INF/view/index.jsp").forward(req, resp);
 
     }
@@ -25,16 +24,6 @@ public class LoginServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setCharacterEncoding("UTF-8");
-/*        switch (req.getParameter("name")) {
-            case ("customer"):
-//                resp.sendRedirect(req.getContextPath() + "/customer");
-                string = "customer";
-                break;
-            case ("admin"):
-//                resp.sendRedirect(req.getContextPath() + "/admin");
-                string = "admin";
-                break;
-        }*/
         User user = DBManager.getInstance().getUser(req.getParameter("phone"));
         req.setAttribute("user", user.getFirstName());
         try {

@@ -7,9 +7,15 @@ public class User {
     private String email;
     private String phoneNumber;
     private String address;
+    private int typeId;
+    private String password;
 
-    public User(int id, String firstName, String secondName, String phoneNumber, String address, String email) {
+
+    public User(int id, int typeId, String password, String firstName,
+                String secondName, String phoneNumber, String address, String email) {
         this.id = id;
+        this.typeId = typeId;
+        this.password = password;
         this.firstName = firstName;
         this.secondName = secondName;
         this.email = email;
@@ -17,12 +23,30 @@ public class User {
         this.address = address;
     }
 
-    public User(int id, String firstName, String secondName, String phoneNumber, String address) {
+    public User(int id, int typeId, String password,
+                String firstName, String secondName, String phoneNumber, String address) {
         this.id = id;
+        this.typeId = typeId;
+        this.password = password;
         this.firstName = firstName;
         this.secondName = secondName;
         this.phoneNumber = phoneNumber;
         this.address = address;
+    }
+    public int getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public int getId() {

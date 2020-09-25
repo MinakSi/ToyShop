@@ -1,5 +1,13 @@
-CREATE DATABASE toyshop_db;
+
 USE toyshop_db;
+drop table order_product;
+drop table `order`;
+drop table product;
+drop table `user`;
+drop table `order_status`;
+drop table `product_type`;
+drop table `user_type`;
+
 
 CREATE TABLE `order`
 (
@@ -25,10 +33,15 @@ CREATE TABLE order_product
 	amount               INTEGER NOT NULL CHECK ( amount >= 1 ),
 	price                DOUBLE NOT NULL CHECK ( price >= 1 )
 );
-
-
 ALTER TABLE order_product
 ADD PRIMARY KEY (product_id,order_id);
+CREATE TABLE product_has_type
+(
+	product_id        INTEGER NOT NULL,
+	type_id           INTEGER NOT NULL
+);
+Alter table product_has_type add primary key (product_id,type_id);
+
 CREATE INDEX XIE1order_product ON order_product
 (
 	price
@@ -40,6 +53,7 @@ CREATE TABLE product
 	description          TEXT NULL,
 	price                DOUBLE NOT NULL CHECK ( price >= 1 ),
 	amount_on_storage    INTEGER NOT NULL CHECK ( amount_on_storage >= 1 )
+#    type_id				 Integer Not null
 );
 CREATE UNIQUE INDEX XAK1product ON product
 (
@@ -49,16 +63,7 @@ CREATE INDEX XIE1product ON product
 (
 	price
 );
-CREATE TABLE status
-(
-	id                   INTEGER NOT NULL primary key auto_increment,
-	name                 VARCHAR(35) NOT NULL
-);
 
-CREATE UNIQUE INDEX XAK1status ON status
-(
-	name
-);
 CREATE TABLE user
 (
 	id                   INTEGER NOT NULL primary key auto_increment,
@@ -66,8 +71,29 @@ CREATE TABLE user
     second_name          VARCHAR(35) NOT NULL,
     email                VARCHAR(50) NULL,
     phone_number         VARCHAR(26) NOT NULL,
-	address              VARCHAR(255) NOT NULL
+	address              VARCHAR(255) NOT NULL,
+    type_id				 INTEGER NOT NULL,
+    password			 VARCHAR(20) NOT NULL
 );
+CREATE TABLE IF NOT EXISTS `toyshop_db`.`user_type` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `type` ENUM('user', 'admin', 'unknown') NOT NULL,
+    PRIMARY KEY (`id`)
+);
+ CREATE TABLE IF NOT EXISTS `toyshop_db`.`order_status` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` ENUM('in process', 'paid', 'rejected') NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `XAK1status` (`name` ASC) VISIBLE
+  );
+  CREATE TABLE IF NOT EXISTS `toyshop_db`.`product_type` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `type` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`)
+  );
+
+
+
 
 CREATE UNIQUE INDEX XAK1user ON user
 (
@@ -75,7 +101,7 @@ CREATE UNIQUE INDEX XAK1user ON user
 	email
 );
 ALTER TABLE `order`
-ADD FOREIGN KEY R_3 (status_id) REFERENCES status (id);
+ADD FOREIGN KEY R_3 (status_id) REFERENCES order_status (id);
 ALTER TABLE `order`
 ADD FOREIGN KEY R_2 (user_id) REFERENCES user (id);
 ALTER TABLE order_product
@@ -84,6 +110,11 @@ ADD FOREIGN KEY R_1 (product_id) REFERENCES product (id)
 ALTER TABLE order_product
 ADD FOREIGN KEY R_5 (order_id) REFERENCES `order` (id)
 		ON DELETE CASCADE;
+#alter table user add foreign key R_6 (type_id) references `user_type` (id);
+alter table product_has_type add foreign key R_8 (product_id) references `product` (id);
+alter table product_has_type add foreign key R_9 (type_id) references `product_type`(id);
+#alter table `product` add foreign key R_7 (type_id) references `product_type` (id);
+
 
 CREATE DEFINER=`admin`@`%` TRIGGER `order_product_BEFORE_INSERT` BEFORE INSERT ON `order_product` FOR EACH ROW BEGIN
 	SET NEW.price = (SELECT price FROM product WHERE NEW.product_id = product.id);
