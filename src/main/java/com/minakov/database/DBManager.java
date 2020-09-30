@@ -1,5 +1,6 @@
 package com.minakov.database;
 
+import com.minakov.database.entity.Product;
 import com.minakov.database.entity.User;
 
 import javax.annotation.Resource;
@@ -7,13 +8,11 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.sql.*;
-import java.util.Properties;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,6 +23,7 @@ public class DBManager {
     private DataSource ds;
     private static final Logger logger = Logger.getLogger(DBManager.class.getName());
     private static final String SQL_FIND_USER_BY_PHONE = "SELECT * FROM user WHERE phone_number = ?;";
+    private static final String SQL_FIND_ALL_PRODUCTS = "SELECT * FROM product;";
 
     private DBManager() {
     }
@@ -52,7 +52,10 @@ public class DBManager {
             statement.setString(1, phone);
             try (ResultSet rs = statement.executeQuery()) {
                 rs.next();
-                user = new User(rs.getInt("id"), rs.getString("first_name"),
+                user = new User(rs.getInt("id"),
+                        rs.getInt("type_id"),
+                        rs.getString("password"),
+                        rs.getString("first_name"),
                         rs.getString("second_name"),
                         rs.getString("phone_number"),
                         rs.getString("address"),
@@ -62,5 +65,28 @@ public class DBManager {
             logger.log(Level.WARNING, INTERRUPT, e);
         }
         return user;
+    }
+    public ArrayList<Product> getProducts(){
+        ArrayList<Product> products = new ArrayList<>();
+        try(Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL_FIND_ALL_PRODUCTS)){
+            try(ResultSet rs = statement.executeQuery()){
+                while (rs.next()){
+                    products.add(new Product(rs.getInt("id"),
+                            rs.getString("name"),
+                            rs.getDouble("price"),
+                            rs.getInt("amount_on_storage"),
+                            rs.getString("description")));
+                }
+
+
+            }
+
+
+        } catch (SQLException | NamingException e) {
+            logger.log(Level.WARNING, INTERRUPT, e);
+        }
+        return products;
+
     }
 }

@@ -4,15 +4,26 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
-  <!--Каталог (вход в систему)-->
+  <!--Login (вход в систему)-->
   <servlet-mapping>
-    <servlet-name>Catalog</servlet-name>
+    <servlet-name>Login</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
 
   <servlet>
-    <servlet-name>Catalog</servlet-name>
+    <servlet-name>Login</servlet-name>
     <servlet-class>com.minakov.servlet.LoginServlet</servlet-class>
+  </servlet>
+
+  <!--Каталог-->
+  <servlet-mapping>
+    <servlet-name>Catalog</servlet-name>
+    <url-pattern>/catalog</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>Catalog</servlet-name>
+    <servlet-class>com.minakov.servlet.CatalogServlet</servlet-class>
   </servlet>
 
   <resource-ref>
