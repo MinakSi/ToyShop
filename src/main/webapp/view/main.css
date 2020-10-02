@@ -1,0 +1,431 @@
+body{
+	background-color: #fafafa;
+	/*background-color: red;*/
+	padding: 0;
+	width:100%;
+	/*background-color: grey;*/
+}
+
+a{
+	color: inherit;
+}
+a:hover{
+	text-decoration: none;
+	color: inherit;
+}
+/*home*/
+#home{
+	height: 800px;
+	background-image:url(/view/img/topdog.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+}
+.home_upper {
+	font-size: 44px;
+	font-family: "Georgia";
+	color: rgb(255, 255, 255);
+	line-height: 1.295;
+	text-align: right;
+	margin-top: 200px;
+	margin-bottom: 20px;
+}
+.home_plain{
+	margin-bottom: 40px;
+	font-size: 15px;
+	font-family: "Arial";
+	color: rgb(205, 205, 205);
+	line-height: 1.6;
+	text-align: right;
+}
+.home_bttn{
+	width: 205px;
+	height: 52px;
+	background-color: rgb(241, 205, 179);
+	border: none;
+}
+.bttn{
+	font-family: "Georgia";
+	font-size: 17px;
+	color: rgb(41, 41, 41);
+	border-radius: 60px;
+	font-weight: 200;
+	cursor: pointer;
+}
+.home_bttn:hover{
+	background-color: #fddcc4;
+}
+.logbot{
+	font-size: 13px;
+	font-family: "Arial";
+	color: rgb(255, 255, 255);
+	margin-top: 0;
+}
+.logtop{
+	margin-bottom: 0;
+	font-size: 28px;
+	font-family: "Georgia"
+	
+}
+.nav-item{
+	border-bottom: 2px solid transparent;
+}
+.li_button{
+	border: none;
+	outline: none;
+	background-color: #fafafa;
+	cursor: pointer;
+}
+.nav-item:hover{
+	border-bottom: 2px solid  rgb(241, 205, 179);
+}
+
+#about{
+	height: 600px;
+}
+.about_ph{
+	background-image: url(/view/img/aboutdog1.png);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.main_h{
+	font-size: 35px;
+	font-family: "Georgia";
+	color: rgb(84, 84, 84);
+}
+.about_txtblock{
+	margin-top: 100px;
+}
+#about_txt1{
+	margin-top: 25px;
+}
+/*friends*/
+#friends{
+	height: 750px;
+	background-color: #f6f6f6;
+}
+.friends_txt{
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+.sl_bttn{
+	border-width: 2px;
+	border-color: rgb(241, 205, 179);
+	border-style: solid;
+	border-radius: 50%;
+	width: 35px;
+	height: 35px;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+.sl_bttn:hover{
+	background-color: #f1cdb3;
+	cursor: pointer;
+}
+#prev_bttn{
+	background-image: url(/view/img/left_arr.png);
+}
+#next_bttn{
+	background-image: url(/view/img/right_arrow.png);
+}
+.inner{
+	height: 270px;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	background-color: #fafafa;
+}
+#inner1{
+	background-image: url(/view/img/petroll1.png);
+}
+#inner2{
+	background-image: url(/view/img/petroll2.png);
+}
+#inner3{
+	background-image: url(/view/img/petroll3.png);
+}
+#inner4{
+	background-image: url(/view/img/petroll1.png);
+}
+#inner5{
+	background-image: url(/view/img/petroll2.png);
+}
+#inner6{
+	background-image: url(/view/img/petroll3.png);
+}
+.sl_p{
+	font-size: 20px;
+	font-family: "Georgia";
+  	color: rgb(84, 84, 84);
+}
+.sl_txt_block{
+	background-color: #fafafa;	
+	height: 100px;
+}
+.bttn_learn{
+	margin-left: 15%;
+	width: 70%;
+	height: 40%;
+	background-color: #fafafa;
+	border-width: 2px;
+	border-color: rgb(241, 205, 179);
+	border-style: solid;
+}
+.bttn_learn:hover{
+	background-color: #f1cdb3;
+}
+.friend_h{
+	font-size: 35px;
+	font-family: "Georgia";
+	color: rgb(84, 84, 84);
+
+}
+.bttn_gettoknow{
+	border-width: 2px;
+	border-color: rgb(241, 205, 179);
+	border-style: solid;
+	background-color: rgb(241, 205, 179);
+	height: 48px;
+}
+.bttn_gettoknow:hover{
+	background-color: rgb(253, 220, 196);
+	border-color: rgb(253, 220, 196);
+}
+.slider_block{
+	margin-bottom: 50px;
+}
+/*help*/
+#help{
+	height: 600px;
+	padding: 0;
+}
+.help_txt{
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+.help_main{
+	height: 300px;
+}
+.help_wrap{
+	padding: 0;
+	margin: 0;
+}
+.help_item_txt{
+	margin-top: 15px;
+}
+.help_item{
+	width: 200px;
+}
+.help_item_img{
+	width: 100%;
+	height: 70px;
+	background-position: center;
+	background-repeat: no-repeat;
+
+}
+#help_item_img1{
+	background-image: url(/view/img/help1.png);
+}
+#help_item_img2{
+	background-image: url(/view/img/help2.png);
+}
+#help_item_img3{
+	background-image: url(/view/img/help3.png);
+}
+#help_item_img4{
+	background-image: url(/view/img/help4.png);
+}
+#help_item_img5{
+	background-image: url(/view/img/help5.png);
+}
+#help_item_img6{
+	background-image: url(/view/img/help6.png);
+}
+#help_item_img7{
+	background-image: url(/view/img/help7.png);
+}
+#help_item_img8{
+	background-image: url(/view/img/help8.png);
+}
+#help_item_img9{
+	background-image: url(/view/img/help9.png);
+}
+/*donation*/
+#donation{
+	height: 400px;
+	background-color: #f6f6f6;
+}
+.donation_img{
+	background-image: url(/view/img/donationdog.png);
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 300px;
+	margin-top: 50px;
+}
+.donation_txt{
+	margin-top: 50px;
+}
+.card_img_block{
+	background-image: url(/view/img/card.png);
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 40px;
+	width: 40px;
+}
+.card{
+	height: 40px;
+	border-radius: 9px;
+	background-color: rgb(241, 205, 179);
+	margin-left: 5px;
+}
+.card_txt_block{
+	font-size: 20px;
+  	font-family: "Times New Roman";
+  	color: rgb(41, 41, 41);
+  	margin-top: 4px;
+}
+.donation_h{
+	width:350px;
+}
+.card_name{
+  font-size: 15px;
+  font-family: "Georgia";
+  color: rgb(84, 84, 84);
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+.donation_lower{
+	font-size: 12px;
+  	font-family: "Arial";
+  	color: rgb(178, 178, 178);
+  	font-style: italic;
+  	width: 351px;
+  	margin-top: 25px;
+}
+/*footer*/
+#footer{
+	background-image: url("/view/img/footer.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: right;
+	height: 360px;
+}
+.footer_h{
+	margin-left: 30px;
+}
+.footer_txt{
+	margin-top: 50px;
+	margin-left: 30px;
+	font-size: 30px;
+  	font-family: "Georgia";
+  	color: rgb(255, 255, 255);
+}
+.footer_content_block{
+	height: 150px;
+	font-size: 25px;
+	font-family: "Times New Roman";
+  	color: rgb(241, 205, 179);
+  	line-height: 1.2;
+}
+.footer_content_line{
+	margin-left: 15px;
+}
+#envelope{
+	background-image: url(/view/img/envelope.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	margin-left: 0;
+	padding-left: 0;
+	width: 40px;
+	height: 40px;
+
+}
+#telephone{
+	background-image: url(/view/img/telephone.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	margin-left: 0;
+	padding-left: 0;
+	width: 40px;
+	height: 40px;
+
+}
+.pin{
+	background-image: url(/view/img/pin.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	margin:0;
+	padding: 0;
+	width: 40px;
+	height: 40px;
+}
+
+/*main_pets*/
+#main_pets{
+	background-color: #f6f6f6;
+	min-height:600px;
+}
+.main_pets_h{
+	font-family: "Georgia";
+	font-size: 35px;
+	color: rgb(84,84,84);
+	text-align: center;
+	margin-top: 2%;
+}
+.catalog-list{
+	/*background-color: red;*/
+	min-height: 300px;
+	width: 100%;
+	padding-bottom: 60px;
+
+}
+.catalog-item{
+	/*float: left;*/
+	/*margin-left: 0px;*/
+	text-align: center;
+}
+.catalog-item-img{
+	height: 270px;
+	/*background-image: url(img/petroll2.png);*/
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.catalog-wrapper{
+	width: 30%;
+}
+.catalog-item-btn{
+	height:40px;
+	margin-right: 15%;
+	text-transform: capitalize;
+}
+.catalog-item-name{
+	font-size: 20px;
+	font-family: "Georgia";
+  	color: rgb(84, 84, 84);
+}
+/*product*/
+.product-wrapper{
+	min-height: 300px;
+}
+ .product-image{
+	background-repeat: no-repeat;
+	background-position: center;
+	height: 500px;
+} 
+.product-description{
+	margin-top: 60px;
+	margin-left: 100px;
+}
+#amount{
+	/*скопировать из product.php. Описан в стайле элемента*/
+}
+/*cart*/
+.cart_table{
+	margin-top: 50px;
+}
+.bttn_order{
+	/*скопировать из cart.php. Описан в стайле элемента*/	
+}
+input{
+	/*скопировать из cart.php. Описан в стайле элемента*/		
+}

@@ -4,6 +4,15 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
+  <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>*.img</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>*.png</url-pattern>
+  </servlet-mapping>
+
   <!--Login (вход в систему)-->
   <servlet-mapping>
     <servlet-name>Login</servlet-name>
@@ -24,6 +33,16 @@
   <servlet>
     <servlet-name>Catalog</servlet-name>
     <servlet-class>com.minakov.servlet.CatalogServlet</servlet-class>
+  </servlet>
+  <!--Корзина-->
+  <servlet-mapping>
+    <servlet-name>Cart</servlet-name>
+    <url-pattern>/cart</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>Cart</servlet-name>
+    <servlet-class>com.minakov.servlet.CartServlet</servlet-class>
   </servlet>
 
   <resource-ref>
