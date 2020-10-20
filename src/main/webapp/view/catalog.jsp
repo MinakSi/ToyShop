@@ -12,33 +12,8 @@
 </head>
 <body>
 
-
-
 <%--<img src="${pageContext.request.contextPath}/view/img/footer.jpg"/>--%>
 
-
-
-<%--<h1>Каталог товаров</h1>--%>
-<%--<c:if test="${!full}">Каталог пуст ${full}</c:if>--%>
-<%--<c:if test="${full}">--%>
-
-<%--    <table>--%>
-<%--        <tr>--%>
-<%--            <th>ID</th>--%>
-<%--            <th>NAME</th>--%>
-<%--            <th>Amount on storage</th>--%>
-<%--            <th>Price</th>--%>
-<%--        </tr>--%>
-<%--        <c:forEach items="${products}" var="p">--%>
-<%--            <tr>--%>
-<%--                <td>${p.getId()}</td>--%>
-<%--                <td>${p.getName()}</td>--%>
-<%--                <td>${p.getAmountOnStorage()}</td>--%>
-<%--                <td>${p.getPrice()}</td>--%>
-<%--            </tr>--%>
-<%--        </c:forEach>--%>
-<%--    </table>--%>
-<%--</c:if>--%>
 
 <div class="container-fluid" id="home_pets">
     <nav class="navbar navbar-expand-lg navbar-dark home_nav row">
@@ -51,10 +26,12 @@
         </button>
         <div class="collapse navbar-collapse col-6 offset-2 justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" style="color:#545454;" href="index.php">Главная
-                    </a>
-                </li>
+                <form action="${pageContext.request.contextPath}/main" method="post">
+                    <li class="nav-item">
+                        <input class="nav-link li_button" type="submit" value="Главная"
+                               style="color:#545454;">
+                    </li>
+                </form>
                 <form action="${pageContext.request.contextPath}/catalog" method="post">
                     <li class="nav-item">
                             <input class="nav-link li_button" type="submit" value="Каталог"
@@ -67,9 +44,12 @@
                                style="color:#545454;">
                     </li>
                 </form>
-                <li class="nav-item">
-                    <a class="nav-link" style="color:#545454;" href="#">Мой кабинет</a>
-                </li>
+                <form action="${pageContext.request.contextPath}/account" method="post">
+                    <li class="nav-item">
+                        <input class="nav-link li_button" type="submit" value="Мой кабинет"
+                               style="color:#545454;">
+                    </li>
+                </form>
             </ul>
         </div>
     </nav>
@@ -92,11 +72,13 @@
                     <div class="container catalog-item-text">
                         <p class="catalog-item-name">${p.getName()}</p>
                     </div>
-<%--                    <a href="product.php?id='.$goods[$i]["id"].'">--%>
-                    <button class="catalog-item-btn bttn_learn bttn">
-                        подробнее</button>
-<%--                        </a>--%>
+                        <form action="${pageContext.request.contextPath}/about" method="post">
+                            <input name="product_id" type="hidden" value="${p.getId()}">
+                            <input class="catalog-item-btn bttn_learn bttn" type="submit" value="подробнее"
+                                   style="color:#545454;">
+                        </form>
                      </div>
+
                 </div>
             </c:forEach>
         </div>

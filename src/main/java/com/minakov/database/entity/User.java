@@ -7,7 +7,7 @@ public class User {
     private String email;
     private String phoneNumber;
     private String address;
-    private int typeId;
+    private int typeId; //?????
     private String password;
 
 

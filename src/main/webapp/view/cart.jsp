@@ -23,10 +23,12 @@
         </button>
         <div class="collapse navbar-collapse col-6 offset-2 justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" style="color:#545454;" href="index.php">Главная
-                    </a>
-                </li>
+                <form action="${pageContext.request.contextPath}/main" method="post">
+                    <li class="nav-item">
+                        <input class="nav-link li_button" type="submit" value="Главная"
+                               style="color:#545454;">
+                    </li>
+                </form>
                 <form action="${pageContext.request.contextPath}/catalog" method="post">
                     <li class="nav-item">
                         <input class="nav-link" type="submit" value="Каталог"
@@ -37,12 +39,18 @@
                                       cursor: pointer;">
                     </li>
                 </form>
-                <li class="nav-item">
-                    <a class="nav-link" style="color:#545454;" href="cart.php">Корзина</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" style="color:#545454;" href="#">Мой кабинет</a>
-                </li>
+                <form action="${pageContext.request.contextPath}/cart" method="post">
+                    <li class="nav-item">
+                        <input class="nav-link li_button" type="submit" value="Корзина"
+                               style="color:#545454;">
+                    </li>
+                </form>
+                <form action="${pageContext.request.contextPath}/account" method="post">
+                    <li class="nav-item">
+                        <input class="nav-link li_button" type="submit" value="Мой кабинет"
+                               style="color:#545454;">
+                    </li>
+                </form>
             </ul>
         </div>
     </nav>

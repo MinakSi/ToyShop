@@ -18,14 +18,12 @@
 </h2>
 
 <form action="${pageContext.request.contextPath}/" method="post">
-    phone:
     <label>
-        <input name="phone" />
+        <input name="phone" placeholder="phone"/>
     </label>
     <br><br>
-    password:
     <label>
-        <input name="password" type="password"/>
+        <input name="password" type="password" placeholder="password"/>
     </label>
     <br><br>
     <input type="submit" value="Войти" />

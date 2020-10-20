@@ -17,7 +17,17 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        req.getRequestDispatcher("/view/index.jsp").forward(req, resp);
+        try {
+            User user = (User) req.getAttribute("user");
+            if(user.getTypeId()==1){
+                req.getRequestDispatcher("/view/admin.jsp").forward(req, resp);
+            } else{
+                req.getRequestDispatcher("catalog").forward(req,resp);
+            }
+        } catch (NullPointerException ex){
+            req.getRequestDispatcher("/view/index.jsp").forward(req, resp);
+        }
+
 
     }
 

@@ -44,6 +44,57 @@
     <servlet-name>Cart</servlet-name>
     <servlet-class>com.minakov.servlet.CartServlet</servlet-class>
   </servlet>
+  <!--Главная-->
+  <servlet-mapping>
+    <servlet-name>Main</servlet-name>
+    <url-pattern>/main</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>Main</servlet-name>
+    <servlet-class>com.minakov.servlet.MainServlet</servlet-class>
+  </servlet>
+  <!--Кабинет-->
+  <servlet-mapping>
+    <servlet-name>Account</servlet-name>
+    <url-pattern>/account</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>Account</servlet-name>
+    <servlet-class>com.minakov.servlet.AccountServlet</servlet-class>
+  </servlet>
+  <!--О товаре-->
+  <servlet-mapping>
+    <servlet-name>About</servlet-name>
+    <url-pattern>/about</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>About</servlet-name>
+    <servlet-class>com.minakov.servlet.AboutServlet</servlet-class>
+  </servlet>
+  <!--Админка-->
+  <servlet-mapping>
+    <servlet-name>Admin</servlet-name>
+    <url-pattern>/admin</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>Admin</servlet-name>
+    <servlet-class>com.minakov.servlet.AdminServlet</servlet-class>
+  </servlet>
+
+  <!--Админка-->
+  <servlet-mapping>
+    <servlet-name>PlusMinusButton</servlet-name>
+    <url-pattern>/plusminus</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>PlusMinusButton</servlet-name>
+    <servlet-class>com.minakov.servlet.AjaxPlusMinusButtonServlet</servlet-class>
+  </servlet>
 
   <resource-ref>
     <description>MySQL Datasource example</description>

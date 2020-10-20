@@ -24,6 +24,8 @@ public class DBManager {
     private static final Logger logger = Logger.getLogger(DBManager.class.getName());
     private static final String SQL_FIND_USER_BY_PHONE = "SELECT * FROM user WHERE phone_number = ?;";
     private static final String SQL_FIND_ALL_PRODUCTS = "SELECT * FROM product;";
+    private static final String SQL_FIND_PRODUCT_BY_ID = "SELECT * FROM product WHERE id = ?;";
+    private static final String SQL_FIND_ALL_ORDERS = "";
 
     private DBManager() {
     }
@@ -88,5 +90,25 @@ public class DBManager {
         }
         return products;
 
+    }
+
+    public Product getProduct(String id){
+        Product product = null;
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL_FIND_PRODUCT_BY_ID)) {
+            statement.setString(1, id);
+            try (ResultSet rs = statement.executeQuery()) {
+                rs.next();
+                product = new Product(rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getDouble("price"),
+                        rs.getInt("amount_on_storage"),
+                        rs.getString("description"));
+            }
+        } catch (SQLException | NamingException e) {
+            logger.log(Level.WARNING, INTERRUPT, e);
+        }
+        return product;
     }
 }
