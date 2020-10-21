@@ -436,3 +436,7 @@ input{
 	font-size: 20px;
 	font-weight: bold;
 }
+/*registration*/
+.required{
+	color: red;
+}

@@ -71,6 +71,9 @@ public class DBManager {
         }
         return user;
     }
+    public void setUser(){
+
+    }
     public ArrayList<Product> getProducts(){
         ArrayList<Product> products = new ArrayList<>();
         try(Connection connection = getConnection();

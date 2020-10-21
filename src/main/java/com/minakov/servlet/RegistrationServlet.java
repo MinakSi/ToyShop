@@ -23,7 +23,7 @@ public class RegistrationServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setCharacterEncoding("UTF-8");
-        User user = DBManager.getInstance().getUser(req.getParameter("phone"));
+
         /*try {
             req.setAttribute("user", user);
             String pass = req.getParameter("password");
