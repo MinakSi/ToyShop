@@ -75,10 +75,12 @@
     <div class="container row col-6 product-description about_plain_txt">
         <p class="col-12">${product.getDescription()}<br><br>Цена: ${product.getPrice()}грн<br>На складе: ${product.getAmountOnStorage()}
         </p>
-        <form class="col-5">
-            <input type="button" id="minus" class="col-5 plusminus bttn bttn_gettoknow" value="-"/>
-            <span id="amount">0</span>
-            <input type="button" id="plus" class="col-5 plusminus bttn bttn_gettoknow" value="+"/>
+        <form class="col-10">
+            <input type="button" id="minus" class="col-3 plusminus bttn bttn_gettoknow" value="-"/>
+            <span id="product_id" hidden>${product.getId()}</span>
+            <span id="amount">${productAmount}</span>
+            <input type="button" id="plus" class="col-3 plusminus bttn bttn_gettoknow" value="+"/>
+            <input type="button" id="clear" class="col-4 plusminus bttn bttn_gettoknow" value="очистить"/>
         </form>
 
         <br>

@@ -429,3 +429,10 @@ a:hover{
 input{
 	/*скопировать из cart.php. Описан в стайле элемента*/		
 }
+.total{
+	text-align: right;
+	padding: 25px 100px;
+	font-family: "Georgia";
+	font-size: 20px;
+	font-weight: bold;
+}

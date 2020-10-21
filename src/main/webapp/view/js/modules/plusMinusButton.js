@@ -8,7 +8,8 @@ $(document).ready(function () {
             type: 'POST',
             data: {
                 amount: amount,
-                operation: this.id
+                operation: this.id,
+                product: $('#product_id').text()
             },
             url: 'plusminus',
             success: function (result) {

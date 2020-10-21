@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 
 public class AboutServlet extends HttpServlet {
@@ -28,6 +29,15 @@ public class AboutServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setCharacterEncoding("UTF-8");
         req.setAttribute("product",DBManager.getInstance().getProduct(req.getParameter("product_id")));
+        HttpSession session = req.getSession();
+        Map<Integer, Integer> cartList = (Map<Integer, Integer>) session.getAttribute("cartList");
+        int productAmount;
+        try {
+            productAmount = cartList.get(Integer.parseInt(req.getParameter("product_id")));
+        } catch (NullPointerException exception){
+            productAmount = 0;
+        }
+        req.setAttribute("productAmount", productAmount);
 
 
         try {

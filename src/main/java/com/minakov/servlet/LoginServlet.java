@@ -19,7 +19,7 @@ public class LoginServlet extends HttpServlet {
 
         try {
             User user = (User) req.getAttribute("user");
-            if(user.getTypeId()==1){
+            if("admin".equals(user.getType().getName())){
                 req.getRequestDispatcher("/view/admin.jsp").forward(req, resp);
             } else{
                 req.getRequestDispatcher("catalog").forward(req,resp);

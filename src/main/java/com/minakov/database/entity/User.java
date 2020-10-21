@@ -7,14 +7,16 @@ public class User {
     private String email;
     private String phoneNumber;
     private String address;
-    private int typeId; //?????
+//    private int typeId; //?????
+    private Status type;
     private String password;
 
 
-    public User(int id, int typeId, String password, String firstName,
+    public User(int id, Status type, String password, String firstName,
                 String secondName, String phoneNumber, String address, String email) {
         this.id = id;
-        this.typeId = typeId;
+//        this.typeId = typeId;
+        this.type = type;
         this.password = password;
         this.firstName = firstName;
         this.secondName = secondName;
@@ -23,22 +25,23 @@ public class User {
         this.address = address;
     }
 
-    public User(int id, int typeId, String password,
+    public User(int id, Status type, String password,
                 String firstName, String secondName, String phoneNumber, String address) {
         this.id = id;
-        this.typeId = typeId;
+//        this.typeId = typeId;
+        this.type = type;
         this.password = password;
         this.firstName = firstName;
         this.secondName = secondName;
         this.phoneNumber = phoneNumber;
         this.address = address;
     }
-    public int getTypeId() {
-        return typeId;
+    public Status getType() {
+        return type;
     }
 
-    public void setTypeId(int typeId) {
-        this.typeId = typeId;
+    public void setType(Status type) {
+        this.type = type;
     }
 
     public String getPassword() {

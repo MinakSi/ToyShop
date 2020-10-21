@@ -13,7 +13,7 @@
     <url-pattern>*.png</url-pattern>
   </servlet-mapping>
 
-  <!--Login (вход в систему)-->
+  <!--Вход в систему-->
   <servlet-mapping>
     <servlet-name>Login</servlet-name>
     <url-pattern>/</url-pattern>
@@ -85,7 +85,7 @@
     <servlet-class>com.minakov.servlet.AdminServlet</servlet-class>
   </servlet>
 
-  <!--Админка-->
+  <!--Кнопки изменения количества товара-->
   <servlet-mapping>
     <servlet-name>PlusMinusButton</servlet-name>
     <url-pattern>/plusminus</url-pattern>
@@ -94,6 +94,17 @@
   <servlet>
     <servlet-name>PlusMinusButton</servlet-name>
     <servlet-class>com.minakov.servlet.AjaxPlusMinusButtonServlet</servlet-class>
+  </servlet>
+
+  <!--Регистрация-->
+  <servlet-mapping>
+    <servlet-name>Registration</servlet-name>
+    <url-pattern>/registration</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>Registration</servlet-name>
+    <servlet-class>com.minakov.servlet.RegistrationServlet</servlet-class>
   </servlet>
 
   <resource-ref>

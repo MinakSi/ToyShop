@@ -4,17 +4,11 @@
 <html>
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>Регистрация</title>
+    <title>Войти</title>
 </head>
 <body>
 <h2>
-    Hello World!
-    <c:if test="${loggedIn}">
-        I am <c:out value="${user.firstName}"/>
-    </c:if>
-    <c:if test="${!loggedIn}">
-        Please log in
-    </c:if>
+    Войти
 </h2>
 
 <form action="${pageContext.request.contextPath}/" method="post">
@@ -30,6 +24,9 @@
 </form>
 <form action="${pageContext.request.contextPath}/catalog" method="post">
     <input type="submit" value="Войти без регистрации">
+</form>
+<form action="${pageContext.request.contextPath}/registration" method="get">
+    <input type="submit" value="Зарегистрироваться">
 </form>
 
 </body>

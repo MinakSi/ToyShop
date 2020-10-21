@@ -1,6 +1,7 @@
 package com.minakov.database;
 
 import com.minakov.database.entity.Product;
+import com.minakov.database.entity.Status;
 import com.minakov.database.entity.User;
 
 import javax.annotation.Resource;
@@ -22,7 +23,8 @@ public class DBManager {
     @Resource(name = "jdbc/toyshop_db")
     private DataSource ds;
     private static final Logger logger = Logger.getLogger(DBManager.class.getName());
-    private static final String SQL_FIND_USER_BY_PHONE = "SELECT * FROM user WHERE phone_number = ?;";
+    private static final String SQL_FIND_USER_BY_PHONE = "SELECT * FROM user inner join user_type on " +
+            "user.id = user_type.id WHERE phone_number = ?";
     private static final String SQL_FIND_ALL_PRODUCTS = "SELECT * FROM product;";
     private static final String SQL_FIND_PRODUCT_BY_ID = "SELECT * FROM product WHERE id = ?;";
     private static final String SQL_FIND_ALL_ORDERS = "";
@@ -54,8 +56,9 @@ public class DBManager {
             statement.setString(1, phone);
             try (ResultSet rs = statement.executeQuery()) {
                 rs.next();
-                user = new User(rs.getInt("id"),
-                        rs.getInt("type_id"),
+                user = new User(rs.getInt("user.id"),
+                        new Status(rs.getInt("user_type.id"),
+                                rs.getString("type")),
                         rs.getString("password"),
                         rs.getString("first_name"),
                         rs.getString("second_name"),
