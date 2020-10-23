@@ -1,5 +1,6 @@
 package com.minakov.database;
 
+import com.minakov.database.entity.Order;
 import com.minakov.database.entity.Product;
 import com.minakov.database.entity.Status;
 import com.minakov.database.entity.User;
@@ -8,12 +9,8 @@ import javax.annotation.Resource;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.print.attribute.standard.PresentationDirection;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.logging.Level;
@@ -30,6 +27,11 @@ public class DBManager {
     private static final String SQL_FIND_ALL_PRODUCTS = "SELECT * FROM product;";
     private static final String SQL_FIND_PRODUCT_BY_ID = "SELECT * FROM product WHERE id = ?;";
     private static final String SQL_FIND_ALL_ORDERS = "";
+    private static final String SQL_FIND_USER_ORDERS = "select * from `order` inner join order_status os on `order`.status_id = os.id join user u on u.id = `order`.user_id " +
+            "where user_id = ?;";
+//    private static final String SQL_FIND_USER_ORDERS = "select * from `order` where user_id = ?;";
+    private static final String SQL_FIND_ORDER_DETAILS = "select op.product_id, op.amount, op.price" +
+            "from order_product op inner join `order` o on op.order_id = o.id where o.id = ?;";
     private static final String SQL_CREATE_USER = "INSERT INTO user(first_name, second_name, email, phone_number, address, password) " +
             "values(?, ?, ?, ?, ?, ?);";
     private static final String SQL_CREATE_ORDER = "INSERT INTO `order` (user_id,  total) values (?, 0);";
@@ -164,5 +166,30 @@ public class DBManager {
         } finally {
             connection.close();
         }
+    }
+
+    public ArrayList<Order> getUserOrders(int userId) {
+        ArrayList<Order> orders = new ArrayList<>();
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_ORDERS)) {
+            statement.setInt(1, userId);
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    User user = getUser(rs.getString("phone_number"));
+                    Date date = rs.getDate("date");
+                    orders.add(new Order(rs.getInt("id"),
+                            date.toLocalDate(),
+                            new Status(rs.getInt("status_id"),
+                                    rs.getString("name")),
+                            user,
+                            rs.getString("invoice_number"),
+                            rs.getDouble("total")
+                            ));
+                }
+            }
+        } catch (SQLException | NamingException e) {
+            logger.log(Level.WARNING, INTERRUPT, e);
+        }
+        return orders;
     }
 }

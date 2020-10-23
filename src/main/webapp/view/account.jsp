@@ -71,8 +71,33 @@
         <p class="main_pets_h col-4 ">Мой кабинет</p>
     </div>
     <form action="${pageContext.request.contextPath}/account" method="post">
-        <input name="logout" type="submit" value="logout">
+        <input  class="bttn_gettoknow bttn" name="logout" type="submit" value="logout">
     </form>
+    <table class="table">
+        <tr>
+            <th>id Заказа</th>
+            <th>Дата</th>
+            <th>Статус</th>
+            <th>Номер накладной</th>
+            <th>Сумма</th>
+        </tr>
+        <c:forEach items="${orders}" var="o">
+            <tr>
+                <td>${o.id}</td>
+                <td>${o.date}</td>
+                <td>${o.status.name}</td>
+                <td>${o.invoiceNumber}</td>
+                <td>${o.total}</td>
+                <td>
+                    <form action="${pageContext.request.contextPath}/about" method="post">
+                        <input name="product_id" type="hidden" value="${o.id}">
+                        <input class="catalog-item-btn bttn_learn bttn" type="submit" value="подробнее"
+                               style="color:#545454;">
+                    </form>
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
 
 </div>
 <div class="container-fluid" id="footer">

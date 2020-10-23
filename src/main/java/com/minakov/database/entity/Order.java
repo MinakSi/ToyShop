@@ -1,16 +1,18 @@
 package com.minakov.database.entity;
 
-import java.time.LocalDateTime;
+
+import java.time.LocalDate;
+
 
 public class Order {
     private int id;
-    private LocalDateTime date;
+    private LocalDate date;
     private Status status;
     private User user;
-    private int invoiceNumber;
-    private int total;
+    private String invoiceNumber;
+    private double total;
 
-    public Order(int id, LocalDateTime date, Status status, User user, int invoiceNumber, int total) {
+    public Order(int id, LocalDate date, Status status, User user, String invoiceNumber, double total) {
         this.id = id;
         this.date = date;
         this.status = status;
@@ -18,6 +20,7 @@ public class Order {
         this.invoiceNumber = invoiceNumber;
         this.total = total;
     }
+
 
     public int getId() {
         return id;
@@ -27,11 +30,11 @@ public class Order {
         this.id = id;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -51,15 +54,15 @@ public class Order {
         this.user = user;
     }
 
-    public int getInvoiceNumber() {
+    public String getInvoiceNumber() {
         return invoiceNumber;
     }
 
-    public void setInvoiceNumber(int invoiceNumber) {
+    public void setInvoiceNumber(String invoiceNumber) {
         this.invoiceNumber = invoiceNumber;
     }
 
-    public int getTotal() {
+    public double getTotal() {
         return total;
     }
 

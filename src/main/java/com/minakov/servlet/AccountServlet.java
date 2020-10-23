@@ -2,9 +2,11 @@ package com.minakov.servlet;
 
 
 import com.minakov.database.DBManager;
+import com.minakov.database.entity.Order;
 import com.minakov.database.entity.Product;
 import com.minakov.database.entity.User;
 
+import javax.jws.soap.SOAPBinding;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +33,16 @@ public class AccountServlet extends HttpServlet {
         if ("logout".equals(req.getParameter("logout"))){
             req.removeAttribute("logout");
             session.removeAttribute("user");
+            try {
+                req.getRequestDispatcher("catalog").forward(req,resp);
+                return;
+            } catch (ServletException e) {
+                e.printStackTrace();
+            }
         }
+        User user = (User)session.getAttribute("user");
+        ArrayList<Order> orders = DBManager.getInstance().getUserOrders(user.getId());
+        session.setAttribute("orders", orders);
 
         try {
             doGet(req, resp);
