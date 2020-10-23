@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 
@@ -18,7 +19,8 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         try {
-            User user = (User) req.getAttribute("user");
+            HttpSession session = req.getSession();
+            User user = (User) session.getAttribute("user");
             if("admin".equals(user.getType().getName())){
                 req.getRequestDispatcher("/view/admin.jsp").forward(req, resp);
             } else{
@@ -35,10 +37,12 @@ public class LoginServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setCharacterEncoding("UTF-8");
         User user = DBManager.getInstance().getUser(req.getParameter("phone"));
+
         try {
-            req.setAttribute("user", user);
             String pass = req.getParameter("password");
             req.setAttribute("loggedIn", pass.equals(user.getPassword()));
+            HttpSession session = req.getSession();
+            session.setAttribute("user", user);
         } catch (NullPointerException e){
             req.setAttribute("loggedIn", false);
         }

@@ -10,7 +10,7 @@
     </style>
 <%--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>--%>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js" integrity="sha512-WNLxfP/8cVYL9sj8Jnp6et0BkubLP31jhTG9vhL/F5uEZmg5wEzKoXp1kJslzPQWwPT1eyMiSxlKCgzHLOTOTQ==" crossorigin="anonymous"></script>
-    <title>О товаре | ${product.getName()}</title>
+    <title>О товаре | ${product.name}</title>
 <%--    <script src="js/vendor/jquery.min.js" type="text/javascript"></script>--%>
 <%--    <script src="js/vendor/jquery.cookie.js" type="text/javascript"></script>--%>
 <%--    <script src="js/vendor/underscore.min.js" type="text/javascript"></script>--%>

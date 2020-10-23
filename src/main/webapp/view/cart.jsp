@@ -98,6 +98,11 @@
         </table>
 
         <div class="total">total = ${total}</div>
+        <c:if test="${!empty(user)}">
+            <form action="${pageContext.request.contextPath}/thanks" method="post">
+                <input class="bttn bttn_gettoknow" type="submit" value="Заказать">
+            </form>
+        </c:if>
 
     </c:if>
 
