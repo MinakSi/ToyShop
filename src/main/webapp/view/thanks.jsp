@@ -45,12 +45,22 @@
                                style="color:#545454;">
                     </li>
                 </form>
-                <form action="${pageContext.request.contextPath}/account" method="post">
-                    <li class="nav-item">
-                        <input class="nav-link li_button" type="submit" value="Мой кабинет"
-                               style="color:#545454;">
-                    </li>
-                </form>
+                <c:if test="${!empty(user)}">
+                    <form action="${pageContext.request.contextPath}/account" method="post">
+                        <li class="nav-item">
+                            <input class="nav-link li_button" type="submit" value="Мой кабинет"
+                                   style="color:#545454;">
+                        </li>
+                    </form>
+                </c:if>
+                <c:if test="${empty(user)}">
+                    <form action="${pageContext.request.contextPath}/">
+                        <li class="nav-item">
+                            <input class="nav-link li_button" type="submit" value="Войти"
+                                   style="color:#545454;">
+                        </li>
+                    </form>
+                </c:if>
             </ul>
         </div>
     </nav>

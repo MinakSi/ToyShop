@@ -22,11 +22,13 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = req.getSession();
             User user = (User) session.getAttribute("user");
             if("admin".equals(user.getType().getName())){
-                req.getRequestDispatcher("/view/admin.jsp").forward(req, resp);
+                req.getRequestDispatcher("admin/orders").forward(req, resp);
+//                req.getRequestDispatcher("/view/admin.jsp").forward(req, resp);
             } else{
                 req.getRequestDispatcher("catalog").forward(req,resp);
             }
         } catch (NullPointerException ex){
+//            req.getRequestDispatcher("").forward(req, resp);
             req.getRequestDispatcher("/view/index.jsp").forward(req, resp);
         }
 

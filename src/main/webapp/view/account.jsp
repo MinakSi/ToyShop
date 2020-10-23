@@ -45,12 +45,22 @@
                                style="color:#545454;">
                     </li>
                 </form>
-                <form action="${pageContext.request.contextPath}/account" method="post">
-                    <li class="nav-item">
-                        <input class="nav-link li_button" type="submit" value="Мой кабинет"
-                               style="color:#545454;">
-                    </li>
-                </form>
+                <c:if test="${!empty(user)}">
+                    <form action="${pageContext.request.contextPath}/account" method="post">
+                        <li class="nav-item">
+                            <input class="nav-link li_button" type="submit" value="Мой кабинет"
+                                   style="color:#545454;">
+                        </li>
+                    </form>
+                </c:if>
+                <c:if test="${empty(user)}">
+                    <form action="${pageContext.request.contextPath}/">
+                        <li class="nav-item">
+                            <input class="nav-link li_button" type="submit" value="Войти"
+                                   style="color:#545454;">
+                        </li>
+                    </form>
+                </c:if>
             </ul>
         </div>
     </nav>
@@ -60,6 +70,9 @@
     <div class="container-fluid row justify-content-center main_pets_wrapper">
         <p class="main_pets_h col-4 ">Мой кабинет</p>
     </div>
+    <form action="${pageContext.request.contextPath}/account" method="post">
+        <input name="logout" type="submit" value="logout">
+    </form>
 
 </div>
 <div class="container-fluid" id="footer">
@@ -106,6 +119,8 @@
 <script src="slick/slick.js"></script>
 <script src="js/modules/main.js"></script>
 
-
+<script type="text/javascript">
+    <%@include file="js/modules/registration.js"%>
+</script>
 </body>
 </html>

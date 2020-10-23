@@ -13,6 +13,17 @@
     <url-pattern>*.png</url-pattern>
   </servlet-mapping>
 
+  <!--Фильтр входа на панель админа-->
+  <filter-mapping>
+    <filter-name>Authentication</filter-name>
+    <url-pattern>/admin</url-pattern>
+  </filter-mapping>
+
+  <filter>
+    <filter-name>Authentication</filter-name>
+    <filter-class>com.minakov.servlet.AuthenticationFilter</filter-class>
+  </filter>
+
   <!--Вход в систему-->
   <servlet-mapping>
     <servlet-name>Login</servlet-name>
@@ -74,14 +85,14 @@
     <servlet-name>About</servlet-name>
     <servlet-class>com.minakov.servlet.AboutServlet</servlet-class>
   </servlet>
-  <!--Админка-->
+  <!--Админка заказы-->
   <servlet-mapping>
-    <servlet-name>Admin</servlet-name>
-    <url-pattern>/admin</url-pattern>
+    <servlet-name>AdminOrders</servlet-name>
+    <url-pattern>/admin/orders</url-pattern>
   </servlet-mapping>
 
   <servlet>
-    <servlet-name>Admin</servlet-name>
+    <servlet-name>AdminOrders</servlet-name>
     <servlet-class>com.minakov.servlet.AdminServlet</servlet-class>
   </servlet>
 
