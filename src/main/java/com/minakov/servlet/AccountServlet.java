@@ -48,6 +48,7 @@ public class AccountServlet extends HttpServlet {
             doGet(req, resp);
         } catch (ServletException e) {
             e.printStackTrace();
+            //checking
         }
     }
 }
