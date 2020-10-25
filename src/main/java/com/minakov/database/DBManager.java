@@ -26,10 +26,11 @@ public class DBManager {
             "user.type_id = user_type.id WHERE phone_number = ?";
     private static final String SQL_FIND_ALL_PRODUCTS = "SELECT * FROM product;";
     private static final String SQL_FIND_PRODUCT_BY_ID = "SELECT * FROM product WHERE id = ?;";
-    private static final String SQL_FIND_ALL_ORDERS = "";
-    private static final String SQL_FIND_USER_ORDERS = "select * from `order` inner join order_status os on `order`.status_id = os.id join user u on u.id = `order`.user_id " +
+    private static final String SQL_FIND_ALL_ORDERS = "select phone_number, date, `order`.id, status_id, name, invoice_number, total from `order` inner join order_status os on `order`.status_id = os.id join user u on u.id = `order`.user_id";
+    private static final String SQL_FIND_USER_ORDERS = "select phone_number, date, `order`.id, status_id, name, invoice_number, total from `order` inner join order_status os on `order`.status_id = os.id join user u on u.id = `order`.user_id " +
             "where user_id = ?;";
-//    private static final String SQL_FIND_ORDER_BY_ID = "";
+    private static final String SQL_INSERT_INVOICE = "UPDATE `order` SET invoice_number = ? WHERE id = ?";
+    private static final String SQL_UPDATE_STATUS = "update `order` set status_id = ? where id = ?;";
     private static final String SQL_FIND_ORDER_DETAILS = "select product_id, op.price, amount, name " +
         "from order_product op join product p on p.id = op.product_id where order_id = ?;";
 
@@ -39,6 +40,8 @@ public class DBManager {
     private static final String SQL_FIND_NEW_ORDER = "select id from `order` where user_id=? and total=0;";
     private static final String SQL_CREATE_ORDER_PRODUCT = "insert into order_product (product_id, order_id, amount, price)" +
             "values (?,?,?,0);";
+    private static final String SQL_FIND_ORDER = "select phone_number, date,u.first_name, u.second_name,`order`.id, status_id, name, invoice_number, total from `order` inner join order_status os on `order`.status_id = os.id\n" +
+            "    join user u on u.id = `order`.user_id where `order`.id = ?;";
 
 
     private DBManager() {
@@ -137,6 +140,31 @@ public class DBManager {
         }
         return product;
     }
+    public Order getOrder(String id) {
+        Order order = null;
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL_FIND_ORDER)) {
+            statement.setString(1, id);
+            try (ResultSet rs = statement.executeQuery()) {
+                rs.next();
+                User user = getUser(rs.getString("phone_number"));
+                Date date = rs.getDate("date");
+                order = new Order(rs.getInt("id"),
+                        date.toLocalDate(),
+                        new Status(rs.getInt("status_id"),
+                                rs.getString("name")),
+                        user,
+                        rs.getString("invoice_number"),
+                        rs.getDouble("total")
+                );
+            }
+        } catch (SQLException | NamingException e) {
+            logger.log(Level.WARNING, INTERRUPT, e);
+        }
+        return order;
+    }
+
 
     public void setOrder(int userId, Map<Integer, Integer> products) throws SQLException {
         Connection connection = null;
@@ -169,6 +197,29 @@ public class DBManager {
         }
     }
 
+    public void setInvoice(int id, String invoice) throws SQLException {
+        try {
+            Connection connection = getConnection();
+            PreparedStatement statement = connection.prepareStatement(SQL_INSERT_INVOICE);
+            statement.setString(1, invoice);
+            statement.setInt(2, id);
+            statement.executeUpdate();
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }
+    }
+    public void updateOrderStatus(int id, int status) throws SQLException {
+        try {
+            Connection connection = getConnection();
+            PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_STATUS);
+            statement.setInt(1, status);
+            statement.setInt(2, id);
+            statement.executeUpdate();
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }
+    }
+
     public ArrayList<Order> getUserOrders(int userId) {
         ArrayList<Order> orders = new ArrayList<>();
         try (Connection connection = getConnection();
@@ -193,6 +244,30 @@ public class DBManager {
         }
         return orders;
     }
+    public ArrayList<Order> getAllOrders() {
+        ArrayList<Order> orders = new ArrayList<>();
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_FIND_ALL_ORDERS)) {
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    User user = getUser(rs.getString("phone_number"));
+                    Date date = rs.getDate("date");
+                    orders.add(new Order(rs.getInt("id"),
+                            date.toLocalDate(),
+                            new Status(rs.getInt("status_id"),
+                                    rs.getString("name")),
+                            user,
+                            rs.getString("invoice_number"),
+                            rs.getDouble("total")
+                    ));
+                }
+            }
+        } catch (SQLException | NamingException e) {
+            logger.log(Level.WARNING, INTERRUPT, e);
+        }
+        return orders;
+    }
+
     public ArrayList<Product> getOrderDetails(int orderId) {
         ArrayList<Product> products = new ArrayList<>();
         try (Connection connection = getConnection();

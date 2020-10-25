@@ -16,7 +16,7 @@
   <!--Фильтр входа на панель админа-->
   <filter-mapping>
     <filter-name>Authentication</filter-name>
-    <url-pattern>/admin</url-pattern>
+    <url-pattern>/admin/*</url-pattern>
   </filter-mapping>
 
   <filter>
@@ -87,13 +87,24 @@
   </servlet>
   <!--Админка заказы-->
   <servlet-mapping>
-    <servlet-name>AdminOrders</servlet-name>
-    <url-pattern>/admin/orders</url-pattern>
+    <servlet-name>AdminMain</servlet-name>
+    <url-pattern>/admin/main</url-pattern>
   </servlet-mapping>
 
   <servlet>
-    <servlet-name>AdminOrders</servlet-name>
-    <servlet-class>com.minakov.servlet.AdminServlet</servlet-class>
+    <servlet-name>AdminMain</servlet-name>
+    <servlet-class>com.minakov.servlet.AdminMainServlet</servlet-class>
+  </servlet>
+
+  <!--Админка детали заказа-->
+  <servlet-mapping>
+    <servlet-name>AdminOrderDetails</servlet-name>
+    <url-pattern>/admin/order</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>AdminOrderDetails</servlet-name>
+    <servlet-class>com.minakov.servlet.AdminOrderServlet</servlet-class>
   </servlet>
 
   <!--Кнопки изменения количества товара-->

@@ -25,13 +25,13 @@ public class AuthenticationFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
         HttpSession session = req.getSession();
-        try {
-            User user = (User)session.getAttribute("user");
+        User user = (User)session.getAttribute("user");
+        if(user!=null) {
             if (!"admin".equals(user.getType().getName())){
                 req.getRequestDispatcher("").forward(req,resp);
             }
-            filterChain.doFilter(servletRequest, servletResponse);
-        } catch (NullPointerException exception){
+            filterChain.doFilter(servletRequest, servletResponse);// must have logged stack trace
+        } else{
             req.getRequestDispatcher("").forward(req,resp);
         }
     }

@@ -27,7 +27,7 @@ public class OrderServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setCharacterEncoding("UTF-8");
-        HttpSession session = req.getSession();
+//        HttpSession session = req.getSession();
         ArrayList<Product> products = null;
         try {
             products = DBManager.getInstance().getOrderDetails(Integer.parseInt(req.getParameter("order_id")));

@@ -2,6 +2,7 @@ package com.minakov.database.entity;
 
 
 import java.time.LocalDate;
+import java.util.Comparator;
 
 
 public class Order {
@@ -69,4 +70,18 @@ public class Order {
     public void setTotal(int total) {
         this.total = total;
     }
+
+    public static Comparator<Order> orderIdDec = new Comparator<Order>() {
+        @Override
+        public int compare(Order o1, Order o2) {
+            return o2.id - o1.id;
+        }
+    };
+    public static Comparator<Order> orderStatus = new Comparator<Order>() {
+        @Override
+        public int compare(Order o1, Order o2) {
+            return o1.status.getId() - o2.status.getId();
+        }
+    };
+
 }

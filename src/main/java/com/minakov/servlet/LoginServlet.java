@@ -22,8 +22,8 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = req.getSession();
             User user = (User) session.getAttribute("user");
             if("admin".equals(user.getType().getName())){
-                req.getRequestDispatcher("admin/orders").forward(req, resp);
-//                req.getRequestDispatcher("/view/admin.jsp").forward(req, resp);
+                req.getRequestDispatcher("admin/main").forward(req, resp);
+//                req.getRequestDispatcher("/view/adminMain.jsp").forward(req, resp);
             } else{
                 req.getRequestDispatcher("catalog").forward(req,resp);
             }
