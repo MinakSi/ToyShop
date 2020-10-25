@@ -12,21 +12,24 @@
 </h2>
 
 <form action="${pageContext.request.contextPath}/" method="post">
-    <label>
-        <input name="phone" placeholder="phone"/>
-    </label>
-    <br><br>
-    <label>
-        <input name="password" type="password" placeholder="password"/>
-    </label>
-    <br><br>
-    <input type="submit" value="Войти" />
+    <div class="form-group">
+        <label>
+            <input class="form-control" name="phone" placeholder="phone"/>
+        </label>
+    </div>
+    <div class="form-group">
+        <label>
+            <input class="form-control" name="password" type="password" placeholder="password"/>
+        </label>
+    </div>
+
+    <input type="submit" value="Войти" class="btn btn-secondary"/>
 </form>
 <form action="${pageContext.request.contextPath}/catalog" method="post">
-    <input type="submit" value="Войти без регистрации">
+    <input type="submit" value="Войти без регистрации" class="btn btn-secondary">
 </form>
 <form action="${pageContext.request.contextPath}/registration" method="get">
-    <input type="submit" value="Зарегистрироваться">
+    <input type="submit" value="Зарегистрироваться" class="btn btn-secondary">
 </form>
 
 </body>

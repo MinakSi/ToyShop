@@ -438,5 +438,5 @@ input{
 }
 /*registration*/
 .required{
-	color: red;
+	border-color: red;
 }

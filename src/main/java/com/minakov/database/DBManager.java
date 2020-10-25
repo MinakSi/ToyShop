@@ -29,9 +29,10 @@ public class DBManager {
     private static final String SQL_FIND_ALL_ORDERS = "";
     private static final String SQL_FIND_USER_ORDERS = "select * from `order` inner join order_status os on `order`.status_id = os.id join user u on u.id = `order`.user_id " +
             "where user_id = ?;";
-//    private static final String SQL_FIND_USER_ORDERS = "select * from `order` where user_id = ?;";
-    private static final String SQL_FIND_ORDER_DETAILS = "select op.product_id, op.amount, op.price" +
-            "from order_product op inner join `order` o on op.order_id = o.id where o.id = ?;";
+//    private static final String SQL_FIND_ORDER_BY_ID = "";
+    private static final String SQL_FIND_ORDER_DETAILS = "select product_id, op.price, amount, name " +
+        "from order_product op join product p on p.id = op.product_id where order_id = ?;";
+
     private static final String SQL_CREATE_USER = "INSERT INTO user(first_name, second_name, email, phone_number, address, password) " +
             "values(?, ?, ?, ?, ?, ?);";
     private static final String SQL_CREATE_ORDER = "INSERT INTO `order` (user_id,  total) values (?, 0);";
@@ -192,4 +193,23 @@ public class DBManager {
         }
         return orders;
     }
+    public ArrayList<Product> getOrderDetails(int orderId) {
+        ArrayList<Product> products = new ArrayList<>();
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_FIND_ORDER_DETAILS)) {
+            statement.setInt(1, orderId);
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    products.add(new Product(rs.getInt("product_id"),
+                            rs.getString("name"),
+                            rs.getDouble("op.price"),
+                            rs.getInt("amount")));
+                }
+            }
+        } catch (SQLException | NamingException e) {
+            logger.log(Level.WARNING, INTERRUPT, e);
+        }
+        return products;
+    }
+
 }

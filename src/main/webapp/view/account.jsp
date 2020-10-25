@@ -89,8 +89,9 @@
                 <td>${o.invoiceNumber}</td>
                 <td>${o.total}</td>
                 <td>
-                    <form action="${pageContext.request.contextPath}/about" method="post">
-                        <input name="product_id" type="hidden" value="${o.id}">
+                    <form action="${pageContext.request.contextPath}/order" method="post">
+                        <input name="order_id" type="hidden" value="${o.id}">
+                        <input name="order_total" type="hidden" value="${o.total}">
                         <input class="catalog-item-btn bttn_learn bttn" type="submit" value="подробнее"
                                style="color:#545454;">
                     </form>

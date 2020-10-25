@@ -129,6 +129,17 @@
     <servlet-class>com.minakov.servlet.BuyServlet</servlet-class>
   </servlet>
 
+  <!--Покупка-->
+  <servlet-mapping>
+    <servlet-name>OrderDetails</servlet-name>
+    <url-pattern>/order</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>OrderDetails</servlet-name>
+    <servlet-class>com.minakov.servlet.OrderServlet</servlet-class>
+  </servlet>
+
   <resource-ref>
     <description>MySQL Datasource example</description>
     <res-ref-name>jdbc/toyshop_db</res-ref-name>
