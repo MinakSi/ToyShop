@@ -26,14 +26,12 @@ public class AuthenticationFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
         HttpSession session = req.getSession();
         User user = (User)session.getAttribute("user");
-        if(user!=null) {
-            if (!"admin".equals(user.getType().getName())){
-                req.getRequestDispatcher("").forward(req,resp);
-            }
-            filterChain.doFilter(servletRequest, servletResponse);// must have logged stack trace
-        } else{
+        if(user==null || !"admin".equals(user.getType().getName())) {
+            session.invalidate();
             req.getRequestDispatcher("").forward(req,resp);
         }
+        filterChain.doFilter(servletRequest, servletResponse);
+
     }
 
 }

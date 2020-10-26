@@ -31,15 +31,17 @@
                                       cursor: pointer;">
                     </li>
                 </form>
-                <form action="${pageContext.request.contextPath}/admin/main" method="post">
+                <form action="${pageContext.request.contextPath}/admin/order" method="post">
+                    <input name="user_phone" value="${client.phoneNumber}" type="hidden">
+                    <input name="order_id" value="${order.id}" type="hidden">
                     <li class="nav-item">
-                        <input class="nav-link li_button" name="logout" type="submit" value="Выйти"
+                        <input class="nav-link li_button" name="blockUser" type="submit" value="Заблокировать пользователя"
                                style="color:#545454;">
                     </li>
                 </form>
-                <form action="${pageContext.request.contextPath}/admin/order" method="post">
+                <form action="${pageContext.request.contextPath}/admin/main" method="post">
                     <li class="nav-item">
-                        <input class="nav-link li_button" name="blockUser" type="submit" value="заблокировать пользователя"
+                        <input class="nav-link li_button" name="logout" type="submit" value="Выйти"
                                style="color:#545454;">
                     </li>
                 </form>
@@ -90,9 +92,8 @@
                 <span>Номер накладной: ${order.invoiceNumber}</span>
             </c:if>
             <br>
-<%--            <input name="invoice" value="${invoice}" type="hidden">--%>
+
             <input name="user_phone" value="${client.phoneNumber}" type="hidden">
-<%--            <input name="order_status" value="${order_status}" type="hidden">--%>
             <input name="order_id" value="${order.id}" type="hidden">
             <c:if test="${empty(order.invoiceNumber) || order.status.id<3}">
                 <input type="submit" value="Подтвердить" name="commitSaves">

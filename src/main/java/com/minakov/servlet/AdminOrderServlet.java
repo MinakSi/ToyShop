@@ -35,7 +35,6 @@ public class AdminOrderServlet extends HttpServlet {
             if (req.getParameter("invoiceInput")!=null){
                 try {
                     DBManager.getInstance().setInvoice(order.getId(), req.getParameter("invoiceInput"));
-//                    order.setInvoiceNumber(req.getParameter("invoiceInput"));
                 } catch (SQLException throwable) {
                     throwable.printStackTrace();
                     req.setAttribute("invoice",req.getParameter("invoice"));
@@ -69,10 +68,17 @@ public class AdminOrderServlet extends HttpServlet {
             }
             order = DBManager.getInstance().getOrder(req.getParameter("order_id"));
         }
-//        else{
-//            req.setAttribute("order_status", req.getParameter("order_status"));
-//        }
         User user = DBManager.getInstance().getUser(req.getParameter("user_phone"));
+        if (req.getParameter("blockUser")!=null){
+            try {
+                DBManager.getInstance().blockUser(user.getId());
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+                req.setAttribute("checking", true);
+                //todo: error page
+            }
+        }
+
         ArrayList<Product> products = DBManager.getInstance().getOrderDetails(order.getId());
         req.setAttribute("order", order);
         req.setAttribute("products", products);

@@ -23,12 +23,15 @@ public class LoginServlet extends HttpServlet {
             User user = (User) session.getAttribute("user");
             if("admin".equals(user.getType().getName())){
                 req.getRequestDispatcher("admin/main").forward(req, resp);
-//                req.getRequestDispatcher("/view/adminMain.jsp").forward(req, resp);
-            } else{
+            }
+            else if("blocked".equals(user.getType().getName())){
+                session.invalidate();
+                req.getRequestDispatcher("/view/index.jsp").forward(req, resp);
+            }
+            else {
                 req.getRequestDispatcher("catalog").forward(req,resp);
             }
         } catch (NullPointerException ex){
-//            req.getRequestDispatcher("").forward(req, resp);
             req.getRequestDispatcher("/view/index.jsp").forward(req, resp);
         }
 

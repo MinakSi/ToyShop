@@ -42,7 +42,7 @@ public class DBManager {
             "values (?,?,?,0);";
     private static final String SQL_FIND_ORDER = "select phone_number, date,u.first_name, u.second_name,`order`.id, status_id, name, invoice_number, total from `order` inner join order_status os on `order`.status_id = os.id\n" +
             "    join user u on u.id = `order`.user_id where `order`.id = ?;";
-
+    private static final String SQL_BLOCK_USER = "update user set type_id = 3 where id = ?;";
 
     private DBManager() {
     }
@@ -203,6 +203,16 @@ public class DBManager {
             PreparedStatement statement = connection.prepareStatement(SQL_INSERT_INVOICE);
             statement.setString(1, invoice);
             statement.setInt(2, id);
+            statement.executeUpdate();
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }
+    }
+    public void blockUser(int id) throws SQLException {
+        try {
+            Connection connection = getConnection();
+            PreparedStatement statement = connection.prepareStatement(SQL_BLOCK_USER);
+            statement.setInt(1, id);
             statement.executeUpdate();
         } catch (NamingException e) {
             e.printStackTrace();
