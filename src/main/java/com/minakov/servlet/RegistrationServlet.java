@@ -23,7 +23,7 @@ public class RegistrationServlet extends HttpServlet {
     }
 
     @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         resp.setCharacterEncoding("UTF-8");
         boolean exc = false;
         try {
@@ -45,6 +45,8 @@ public class RegistrationServlet extends HttpServlet {
             }
         } catch (ServletException e) {
             e.printStackTrace();
+        } catch (SQLException exception) {
+            req.getRequestDispatcher("view/errorPage.jsp").forward(req, resp);
         }
 
     }

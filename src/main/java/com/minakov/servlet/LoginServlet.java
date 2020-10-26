@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 
 
 public class LoginServlet extends HttpServlet {
@@ -39,9 +40,14 @@ public class LoginServlet extends HttpServlet {
     }
 
     @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         resp.setCharacterEncoding("UTF-8");
-        User user = DBManager.getInstance().getUser(req.getParameter("phone"));
+        User user = null;
+        try {
+            user = DBManager.getInstance().getUser(req.getParameter("phone"));
+        } catch (SQLException exception) {
+            req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
+        }
 
         try {
             String pass = req.getParameter("password");

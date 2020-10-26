@@ -62,7 +62,7 @@ public class DBManager {
         return ds.getConnection();
     }
 
-    public User getUser(String phone) {
+    public User getUser(String phone) throws SQLException {
         User user = null;
         try (
                 Connection connection = getConnection();
@@ -80,7 +80,7 @@ public class DBManager {
                         rs.getString("address"),
                         rs.getString("email"));
             }
-        } catch (SQLException | NamingException e) {
+        } catch (NamingException e) {
             logger.log(Level.WARNING, INTERRUPT, e);
         }
         return user;
