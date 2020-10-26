@@ -108,6 +108,17 @@
     <servlet-class>com.minakov.servlet.admin.AdminOrderServlet</servlet-class>
   </servlet>
 
+  <!--Админка добавить заказ-->
+  <servlet-mapping>
+    <servlet-name>AdminAddProduct</servlet-name>
+    <url-pattern>/admin/add</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>AdminAddProduct</servlet-name>
+    <servlet-class>com.minakov.servlet.admin.AdminAddProductServlet</servlet-class>
+  </servlet>
+
   <!--Кнопки изменения количества товара-->
   <servlet-mapping>
     <servlet-name>PlusMinusButton</servlet-name>
@@ -157,6 +168,14 @@
     <error-code>404</error-code>
     <location>/view/errorPage.jsp</location>
   </error-page>
+
+  <!-- Выгрузка изображений-->
+  <context-param>
+    <param-name>upload.location</param-name>
+    <param-value>/finalProject/webapp/view/img</param-value>
+  </context-param>
+
+
 
   <resource-ref>
     <description>MySQL Datasource example</description>

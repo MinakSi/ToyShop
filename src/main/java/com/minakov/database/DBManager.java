@@ -9,7 +9,13 @@ import javax.annotation.Resource;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.http.Part;
 import javax.sql.DataSource;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Map;
@@ -43,6 +49,8 @@ public class DBManager {
     private static final String SQL_FIND_ORDER = "select phone_number, date,u.first_name, u.second_name,`order`.id, status_id, name, invoice_number, total from `order` inner join order_status os on `order`.status_id = os.id\n" +
             "    join user u on u.id = `order`.user_id where `order`.id = ?;";
     private static final String SQL_BLOCK_USER = "update user set type_id = 3 where id = ?;";
+    private static final String SQL_CREATE_PRODUCT = "INSERT INTO product" +
+            "    (name, description, price, amount_on_storage) VALUES (?, ?, ?, ?);";
 
     private DBManager() {
     }
@@ -196,7 +204,33 @@ public class DBManager {
             connection.close();
         }
     }
+    public void setProduct(Part part, Product product) throws SQLException {
+        Connection connection = null;
+        try{
+            connection = getConnection();
+            connection.setAutoCommit(false);
+            PreparedStatement statement = connection.prepareStatement(SQL_CREATE_PRODUCT);
+            statement.setString(1, product.getName());
+            statement.setString(2, product.getDescription());
+            statement.setDouble(3, product.getPrice());
+            statement.setInt(4, product.getAmountOnStorage());
+            statement.executeUpdate();
+            String fileName = URLDecoder.decode(part.getSubmittedFileName(), "UTF-8");
+            File uploads = new File("C:\\Users\\Lenovo\\IdeaProjects\\finalProject\\src\\main\\webapp\\view\\img" + File.separator + fileName);
+            uploads.getParentFile().mkdirs();
+            InputStream fileContent = part.getInputStream();
+            java.nio.file.Files.copy(fileContent, uploads.toPath());
+            fileContent.close();
+            connection.commit();
 
+        } catch (IOException | SQLException | NamingException e){
+            connection.rollback();
+            throw new SQLException();
+        } finally {
+            connection.close();
+        }
+
+    }
     public void setInvoice(int id, String invoice) throws SQLException {
         try {
             Connection connection = getConnection();
