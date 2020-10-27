@@ -30,7 +30,7 @@ public class DBManager {
     private static final Logger logger = Logger.getLogger(DBManager.class.getName());
     private static final String SQL_FIND_USER_BY_PHONE = "SELECT * FROM user inner join user_type on " +
             "user.type_id = user_type.id WHERE phone_number = ?";
-    private static final String SQL_FIND_ALL_PRODUCTS = "SELECT * FROM product;";
+    private static final String SQL_FIND_ALL_PRODUCTS = "SELECT * FROM product";
     private static final String SQL_FIND_PRODUCT_BY_ID = "SELECT * FROM product WHERE id = ?;";
     private static final String SQL_FIND_ALL_ORDERS = "select phone_number, date, `order`.id, status_id, name, invoice_number, total from `order` inner join order_status os on `order`.status_id = os.id join user u on u.id = `order`.user_id";
     private static final String SQL_FIND_USER_ORDERS = "select phone_number, date, `order`.id, status_id, name, invoice_number, total from `order` inner join order_status os on `order`.status_id = os.id join user u on u.id = `order`.user_id " +
@@ -51,6 +51,13 @@ public class DBManager {
     private static final String SQL_BLOCK_USER = "update user set type_id = 3 where id = ?;";
     private static final String SQL_CREATE_PRODUCT = "INSERT INTO product" +
             "    (name, description, price, amount_on_storage) VALUES (?, ?, ?, ?);";
+    public static final String SQL_ORDER_BY_PRICE = " ORDER BY price";
+    public static final String SQL_ORDER_BY_PRICE_DESC = " ORDER BY price DESC";
+    public static final String SQL_ORDER_BY_NAME = " ORDER BY name";
+    public static final String SQL_ORDER_BY_NAME_DESC = " ORDER BY name DESC";
+    public static final String SQL_ORDER_BY_ID = " ORDER BY id";
+    private static final String SQL_LIMIT = " LIMIT ?, ?";
+
 
     private DBManager() {
     }
@@ -110,10 +117,12 @@ public class DBManager {
         }
     }
 
-    public ArrayList<Product> getProducts() {
+    public ArrayList<Product> getProducts(String order, int limitLow, int limitMax) {
         ArrayList<Product> products = new ArrayList<>();
         try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQL_FIND_ALL_PRODUCTS)) {
+             PreparedStatement statement = connection.prepareStatement(SQL_FIND_ALL_PRODUCTS+order+SQL_LIMIT)) {
+            statement.setInt(1, limitLow);
+            statement.setInt(2, limitMax);
             try (ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
                     products.add(new Product(rs.getInt("id"),

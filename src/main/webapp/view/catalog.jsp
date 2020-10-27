@@ -68,6 +68,34 @@
 <div class="container-fluid" id="main_pets">
     <div class="container-fluid row justify-content-center main_pets_wrapper">
         <p class="main_pets_h col-4 ">Каталог товаров ${user.firstName}</p>
+        <form action="${pageContext.request.contextPath}/catalog" method="post">
+            <label>Сортировка по:
+                <select name="sortBy">
+                    <option<c:if test="${sortBy eq 'id'}">
+                        selected
+                    </c:if>>id</option>
+                    <option<c:if test="${sortBy eq 'price up'}">
+                        selected
+                    </c:if>>price up</option>
+                    <option<c:if test="${sortBy eq 'price down'}">
+                        selected
+                    </c:if>>price down</option>
+                    <option<c:if test="${sortBy eq 'name a-z'}">
+                        selected
+                    </c:if>>name a-z</option>
+                    <option<c:if test="${sortBy eq 'name z-a'}">
+                        selected
+                    </c:if>>name z-a</option>
+
+                </select>
+            </label>
+<%--            <input name="page" placeholder="page"/>--%>
+            <input name="sort" type="submit" value="Сортировать"/> <br>
+            <input name="-" type="submit" value="<"/>
+            <input name="page" type="hidden" value="${page}"/>
+            <span>${page}</span>
+            <input name="+" type="submit" value=">"/>
+        </form>
     </div>
     <!-- //////////////////////////////////////////////////////// -->
     <div class="container-fluid catalog-list justify-content-around">

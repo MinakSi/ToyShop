@@ -16,6 +16,8 @@ import java.util.ArrayList;
 
 public class CatalogServlet extends HttpServlet {
 
+    private final int AMOUNT_ON_PAGE = 2;
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -27,10 +29,43 @@ public class CatalogServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setCharacterEncoding("UTF-8");
-        ArrayList<Product> products = DBManager.getInstance().getProducts();
+        ArrayList<Product> products;
+        int page = req.getParameter("page") == null?1:Integer.parseInt(req.getParameter("page"));
 
+        if (req.getParameterMap().containsKey("sort") || req.getParameterMap().containsKey("+")
+        || req.getParameterMap().containsKey("-")) {
+            String sortProducts;
+            switch (req.getParameter("sortBy")){
+                case"price up":
+                    sortProducts = DBManager.SQL_ORDER_BY_PRICE;
+                    break;
+                case"price down":
+                    sortProducts = DBManager.SQL_ORDER_BY_PRICE_DESC;
+                    break;
+                case"name a-z":
+                    sortProducts = DBManager.SQL_ORDER_BY_NAME;
+                    break;
+                case"name z-a":
+                    sortProducts = DBManager.SQL_ORDER_BY_NAME_DESC;
+                    break;
+                default:
+                    sortProducts = DBManager.SQL_ORDER_BY_ID;
+            }
+            if(req.getParameter("+")!=null){
+                page++;
+            } else if (req.getParameter("-")!=null){
+                page--;
+            }
+            products =  DBManager.getInstance().getProducts(sortProducts,
+                    (page-1)*AMOUNT_ON_PAGE, AMOUNT_ON_PAGE);
+            req.setAttribute("sortBy", req.getParameter("sortBy"));
+        }else{
+            products =  DBManager.getInstance().getProducts(DBManager.SQL_ORDER_BY_ID,0,AMOUNT_ON_PAGE);
+            req.setAttribute("sortBy", "id");
+        }
         req.setAttribute("full", products.size() > 0);
         req.setAttribute("products", products);
+        req.setAttribute("page", page);
         try {
             doGet(req, resp);
         } catch (ServletException e) {

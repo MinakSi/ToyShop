@@ -55,9 +55,6 @@
         <p class="main_pets_h col-4 ">Заказ № ${order.id}</p>
 
         <form action="${pageContext.request.contextPath}/admin/order" method="post">
-            <c:if test="${checking}">
-                QWERTYUIOP[
-            </c:if>
             <span>Id клиента: ${client.id}</span><br>
             <span>Имя: ${client.firstName}</span><br>
             <span>Фамилия: ${client.secondName}</span><br>
