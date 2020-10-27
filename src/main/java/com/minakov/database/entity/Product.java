@@ -1,5 +1,9 @@
 package com.minakov.database.entity;
-
+/**
+ * This class describes a product form DB.
+ *
+ * @author Serhii Minakov
+ */
 public class Product {
     private int id;
     private String name;

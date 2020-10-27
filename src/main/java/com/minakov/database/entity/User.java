@@ -1,5 +1,9 @@
 package com.minakov.database.entity;
-
+/**
+ * This class describes a user form DB.
+ *
+ * @author Serhii Minakov
+ */
 public class User {
     private int id;
     private String firstName;
@@ -7,7 +11,6 @@ public class User {
     private String email;
     private String phoneNumber;
     private String address;
-//    private int typeId; //?????
     private Status type;
     private String password;
 
@@ -15,7 +18,6 @@ public class User {
     public User(int id, Status type, String password, String firstName,
                 String secondName, String phoneNumber, String address, String email) {
         this.id = id;
-//        this.typeId = typeId;
         this.type = type;
         this.password = password;
         this.firstName = firstName;
@@ -28,7 +30,6 @@ public class User {
     public User(int id, Status type, String password,
                 String firstName, String secondName, String phoneNumber, String address) {
         this.id = id;
-//        this.typeId = typeId;
         this.type = type;
         this.password = password;
         this.firstName = firstName;
@@ -100,8 +101,8 @@ public class User {
         this.address = address;
     }
 
-    @Override
-    public String toString() {
-        return this.firstName==null?"null":this.firstName;
-    }
+//    @Override
+//    public String toString() {
+//        return this.firstName==null?"null":this.firstName;
+//    }
 }

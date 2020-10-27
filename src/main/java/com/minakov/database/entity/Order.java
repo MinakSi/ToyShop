@@ -4,7 +4,14 @@ package com.minakov.database.entity;
 import java.time.LocalDate;
 import java.util.Comparator;
 
-
+/**
+ * This class describes an order form DB.
+ * Includes as class fields this custom classes:
+ * @see Status
+ * @see User
+ *
+ * @author Serhii Minakov
+ */
 public class Order {
     private int id;
     private LocalDate date;

@@ -1,5 +1,9 @@
 package com.minakov.database.entity;
-
+/**
+ * This class describes a status form DB.
+ *
+ * @author Serhii Minakov
+ */
 public class Status {
     private int id;
     private String name;
