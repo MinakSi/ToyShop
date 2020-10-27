@@ -1,20 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <style type="text/css">
         <%@include file="main.css"%>
-        <%@include file="slick/slick.css"%>
-        <%@include file="slick/slick-theme.css"%>
     </style>
-<%--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>--%>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js" integrity="sha512-WNLxfP/8cVYL9sj8Jnp6et0BkubLP31jhTG9vhL/F5uEZmg5wEzKoXp1kJslzPQWwPT1eyMiSxlKCgzHLOTOTQ==" crossorigin="anonymous"></script>
     <title>О товаре | ${product.name}</title>
-<%--    <script src="js/vendor/jquery.min.js" type="text/javascript"></script>--%>
-<%--    <script src="js/vendor/jquery.cookie.js" type="text/javascript"></script>--%>
-<%--    <script src="js/vendor/underscore.min.js" type="text/javascript"></script>--%>
-<%--    <script src="js/modules/plusMinusButton.js" type="text/javascript"></script>--%>
 </head>
 <body>
 
@@ -29,12 +23,6 @@
         </button>
         <div class="collapse navbar-collapse col-6 offset-2 justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
-                <form action="${pageContext.request.contextPath}/main" method="post">
-                    <li class="nav-item">
-                        <input class="nav-link li_button" type="submit" value="Главная"
-                               style="color:#545454;">
-                    </li>
-                </form>
                 <form action="${pageContext.request.contextPath}/catalog" method="post">
                     <li class="nav-item">
                         <input class="nav-link" type="submit" value="Каталог"
@@ -85,6 +73,8 @@
     <div class="container row col-6 product-description about_plain_txt">
         <p class="col-12">${product.getDescription()}<br><br>Цена: ${product.getPrice()}грн<br>На складе: ${product.getAmountOnStorage()}
         </p>
+
+
         <form class="col-10">
             <input type="button" id="minus" class="col-3 plusminus bttn bttn_gettoknow" value="-"/>
             <span id="product_id" hidden>${product.getId()}</span>
@@ -96,8 +86,6 @@
         <br>
 
 
-        <!-- <a href="cart.php" class="col-5 offset-1"><button class="col bttn bttn_gettoknow">Корзина</button></a> -->
-
     </div>
 </div>
 
@@ -105,18 +93,10 @@
 
 
 
-<%--<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>--%>
-
-<%--<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>--%>
-<%--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>--%>
 
 <script type="text/javascript">
     <%@include file="js/modules/plusMinusButton.js"%>
-    <%@include file="slick/slick.js"%>
-    <%@include file="js/modules/main.js"%>
 </script>
-
-<%--<script src="js/modules/plusMinusButton.js"></script>--%>
 
 </body>
 </html>

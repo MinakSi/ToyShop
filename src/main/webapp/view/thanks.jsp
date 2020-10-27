@@ -23,12 +23,6 @@
         </button>
         <div class="collapse navbar-collapse col-6 offset-2 justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
-                <form action="${pageContext.request.contextPath}/main" method="post">
-                    <li class="nav-item">
-                        <input class="nav-link li_button" type="submit" value="Главная"
-                               style="color:#545454;">
-                    </li>
-                </form>
                 <form action="${pageContext.request.contextPath}/catalog" method="post">
                     <li class="nav-item">
                         <input class="nav-link" type="submit" value="Каталог"
@@ -72,45 +66,6 @@
     </div>
 </div>
 
-
-</div>
-<div class="container-fluid" id="footer">
-    <div class="container-fluid row footer_wrapper justify-content-left">
-        <div class="main_h footer_txt col-3" id="footer_txt1">
-            <p class=" footer_h">Наши контакты</p>
-            <div class="container-fluid footer_content_block row">
-                <div class="footer_content_img" id="envelope"></div>
-                <div class="footer_content_line_block">
-                    <p class="footer_content_line">toyshop@gmail.com</p>
-                </div>
-                <div class="col"></div>
-                <div class="footer_content_img" id="telephone"></div>
-                <div class="footer_content_line_block">
-                    <p class="footer_content_line">+13 674 567 75 54</p>
-                </div>
-            </div>
-        </div>
-        <div class="main_h footer_txt col-4" id="footer_txt2">
-            <!-- <div class="footer_txt2h_wrap"> -->
-            <p class="footer_h">Мы находимся</p>
-            <!-- </div> -->
-            <div class=" container-fluid footer_content_block row">
-                <div class="container-fluid row align-items-center">
-                    <div class="footer_content_img pin"></div>
-                    <div class="footer_content_line_block col-10">
-                        <p class="footer_content_line">Boston, Central Street, 1st (Entrance from the store)</p>
-                    </div>
-                </div>
-                <div class="col"></div>
-                <div class="footer_content_img pin"></div>
-                <div class="footer_content_line_block">
-                    <p class="footer_content_line">London, South Park, 18st</p>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
 
 </body>
 </html>

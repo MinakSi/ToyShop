@@ -30,11 +30,7 @@ public class AdminMainServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         resp.setCharacterEncoding("UTF-8");
         HttpSession session = req.getSession();
-        if (req.getParameter("logout")!=null){
-            session.invalidate();
-            req.getRequestDispatcher("").forward(req,resp);
-            return;
-        }
+
         ArrayList<Order> orders = null;
         try {
             orders = DBManager.getInstance().getAllOrders();
@@ -42,7 +38,7 @@ public class AdminMainServlet extends HttpServlet {
             LOG.error("admin main error", exception);
             req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
         }
-        if (orders!=null){
+        if (orders != null) {
             orders.sort(Order.orderIdDec);
             orders.sort(Order.orderStatus);
         }
@@ -54,5 +50,6 @@ public class AdminMainServlet extends HttpServlet {
         } catch (ServletException e) {
             e.printStackTrace();
         }
+
     }
 }

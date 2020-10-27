@@ -110,6 +110,17 @@
     <servlet-class>com.minakov.servlet.admin.AdminAddProductServlet</servlet-class>
   </servlet>
 
+  <!--Админка logout-->
+  <servlet-mapping>
+    <servlet-name>AdminLogout</servlet-name>
+    <url-pattern>/admin/logout</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>AdminLogout</servlet-name>
+    <servlet-class>com.minakov.servlet.admin.AdminLogout</servlet-class>
+  </servlet>
+
   <!--Кнопки изменения количества товара-->
   <servlet-mapping>
     <servlet-name>PlusMinusButton</servlet-name>
