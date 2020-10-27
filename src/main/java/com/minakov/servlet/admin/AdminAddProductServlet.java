@@ -3,23 +3,23 @@ package com.minakov.servlet.admin;
 
 
 import com.minakov.database.DBManager;
-import com.minakov.database.entity.Order;
 import com.minakov.database.entity.Product;
+import com.minakov.servlet.listener.ConfigListener;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.http.*;
-import java.io.File;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URLDecoder;
 import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Paths;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 @MultipartConfig
 public class AdminAddProductServlet extends HttpServlet {
+    private static final Logger LOG = Logger.getLogger(ConfigListener.class);
 
 
     @Override
@@ -32,7 +32,6 @@ public class AdminAddProductServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         resp.setCharacterEncoding("UTF-8");
-        HttpSession session = req.getSession();
         if (req.getParameterMap().containsKey("createProduct")) {
 
             try {
@@ -45,10 +44,12 @@ public class AdminAddProductServlet extends HttpServlet {
                 DBManager.getInstance().setProduct(part,product);
             } catch (ServletException | FileAlreadyExistsException e) {
                 req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
-                //todo: log
+                LOG.error("admin add product error", e);
+
             } catch (SQLException exception) {
                 exception.printStackTrace();
                 req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
+                LOG.error("admin add product error", exception);
             }
 
         }

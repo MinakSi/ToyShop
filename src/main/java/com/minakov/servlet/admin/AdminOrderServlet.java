@@ -5,20 +5,20 @@ import com.minakov.database.DBManager;
 import com.minakov.database.entity.Order;
 import com.minakov.database.entity.Product;
 import com.minakov.database.entity.User;
+import com.minakov.servlet.listener.ConfigListener;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 
 
 public class AdminOrderServlet extends HttpServlet {
-
+    private static final Logger LOG = Logger.getLogger(ConfigListener.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -36,10 +36,9 @@ public class AdminOrderServlet extends HttpServlet {
                 try {
                     DBManager.getInstance().setInvoice(order.getId(), req.getParameter("invoiceInput"));
                 } catch (SQLException throwable) {
-                    throwable.printStackTrace();
                     req.setAttribute("invoice",req.getParameter("invoice"));
-                    req.setAttribute("checking", true);
-                    //todo: error page
+                    req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
+                    LOG.error("admin order error", throwable);
                 }
             }
             int newStatus;
@@ -63,8 +62,8 @@ public class AdminOrderServlet extends HttpServlet {
                 DBManager.getInstance().updateOrderStatus(order.getId(), newStatus);
 
             } catch (SQLException exception) {
-                exception.printStackTrace();
-                req.setAttribute("checking", true);
+                req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
+                LOG.error("admin order error", exception);
             }
             order = DBManager.getInstance().getOrder(req.getParameter("order_id"));
         }
@@ -72,15 +71,15 @@ public class AdminOrderServlet extends HttpServlet {
         try {
             user = DBManager.getInstance().getUser(req.getParameter("user_phone"));
         } catch (SQLException exception) {
-            req.getRequestDispatcher("view/errorPage.jsp").forward(req, resp);
+            req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
+            LOG.error("admin order error", exception);
         }
-        if (req.getParameter("blockUser")!=null){
+        if (req.getParameter("blockUser")!=null && user!=null){
             try {
                 DBManager.getInstance().blockUser(user.getId());
             } catch (SQLException exception) {
-                exception.printStackTrace();
-                req.setAttribute("checking", true);
-                //todo: error page
+                req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
+                LOG.error("admin order error", exception);
             }
         }
 
