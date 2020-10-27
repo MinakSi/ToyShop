@@ -1,5 +1,5 @@
 package com.minakov.servlet;
-import com.minakov.database.DBManager;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,15 +29,6 @@ public class AjaxPlusMinusButtonServlet extends HttpServlet {
             cartList = new HashMap<>();
         }
 
-//        if("plus".equals(req.getParameter("operation"))){
-//            amount++;
-//        } else if("minus".equals(req.getParameter("operation"))){
-//            if(amount>0){
-//                amount--;
-//            }
-//        } else {
-//            amount = 0;
-//        }
         switch (req.getParameter("operation")){
             case "plus":
                 amount++;

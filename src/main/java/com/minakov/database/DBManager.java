@@ -150,7 +150,7 @@ public class DBManager {
      * @see Product
      */
 
-    public ArrayList<Product> getProducts(String order, int limitLow, int limitMax) {
+    public ArrayList<Product> getProducts(String order, int limitLow, int limitMax) throws SQLException {
         ArrayList<Product> products = new ArrayList<>();
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_FIND_ALL_PRODUCTS+order+SQL_LIMIT)) {
@@ -165,7 +165,7 @@ public class DBManager {
                             rs.getString("description")));
                 }
             }
-        } catch (SQLException | NamingException e) {
+        } catch (NamingException e) {
             logger.log(Level.WARNING, INTERRUPT, e);
         }
         return products;
@@ -179,7 +179,7 @@ public class DBManager {
      * @see Product
      */
 
-    public Product getProduct(String id) {
+    public Product getProduct(String id) throws SQLException {
         Product product = null;
         try (
                 Connection connection = getConnection();
@@ -193,7 +193,7 @@ public class DBManager {
                         rs.getInt("amount_on_storage"),
                         rs.getString("description"));
             }
-        } catch (SQLException | NamingException e) {
+        } catch (NamingException e) {
             logger.log(Level.WARNING, INTERRUPT, e);
         }
         return product;
@@ -207,7 +207,7 @@ public class DBManager {
      * @see Order
      */
 
-    public Order getOrder(String id) {
+    public Order getOrder(String id) throws SQLException {
         Order order = null;
         try (
                 Connection connection = getConnection();
@@ -226,7 +226,7 @@ public class DBManager {
                         rs.getDouble("total")
                 );
             }
-        } catch (SQLException | NamingException e) {
+        } catch (NamingException e) {
             logger.log(Level.WARNING, INTERRUPT, e);
         }
         return order;
@@ -438,7 +438,7 @@ public class DBManager {
      * @see Product
      */
 
-    public ArrayList<Product> getOrderDetails(int orderId) {
+    public ArrayList<Product> getOrderDetails(int orderId) throws SQLException {
         ArrayList<Product> products = new ArrayList<>();
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_FIND_ORDER_DETAILS)) {
@@ -451,7 +451,7 @@ public class DBManager {
                             rs.getInt("amount")));
                 }
             }
-        } catch (SQLException | NamingException e) {
+        } catch ( NamingException e) {
             logger.log(Level.WARNING, INTERRUPT, e);
         }
         return products;

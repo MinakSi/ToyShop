@@ -42,14 +42,9 @@ public class AdminAddProductServlet extends HttpServlet {
                         Integer.parseInt(req.getParameter("amount")),
                         req.getParameter("description"));
                 DBManager.getInstance().setProduct(part,product);
-            } catch (ServletException | FileAlreadyExistsException e) {
-                req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
+            } catch (FileAlreadyExistsException | SQLException e) {
                 LOG.error("admin add product error", e);
-
-            } catch (SQLException exception) {
-                exception.printStackTrace();
                 req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
-                LOG.error("admin add product error", exception);
             }
 
         }

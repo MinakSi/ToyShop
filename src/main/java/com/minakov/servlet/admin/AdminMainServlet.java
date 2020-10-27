@@ -31,24 +31,21 @@ public class AdminMainServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         HttpSession session = req.getSession();
         if (req.getParameter("logout")!=null){
-            req.removeAttribute("logout");
-            session.removeAttribute("user");
-            try {
-                req.getRequestDispatcher("").forward(req,resp);
-                return;
-            } catch (ServletException e) {
-                req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
-                LOG.error("admin main error", e);
-            }
+            session.invalidate();
+            req.getRequestDispatcher("").forward(req,resp);
+            return;
         }
         ArrayList<Order> orders = null;
         try {
             orders = DBManager.getInstance().getAllOrders();
         } catch (SQLException exception) {
-            req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
             LOG.error("admin main error", exception);
+            req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
         }
-        orders.sort(Order.orderIdDec);
+        if (orders!=null){
+            orders.sort(Order.orderIdDec);
+            orders.sort(Order.orderStatus);
+        }
         session.setAttribute("orders", orders);
 
 

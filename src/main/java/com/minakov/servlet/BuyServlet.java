@@ -3,6 +3,8 @@ package com.minakov.servlet;
 
 import com.minakov.database.DBManager;
 import com.minakov.database.entity.User;
+import com.minakov.servlet.listener.ConfigListener;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,7 +17,7 @@ import java.util.Map;
 
 
 public class BuyServlet extends HttpServlet {
-
+    private static final Logger LOG = Logger.getLogger(ConfigListener.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -24,20 +26,19 @@ public class BuyServlet extends HttpServlet {
     }
 
     @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         resp.setCharacterEncoding("UTF-8");
-        boolean exc = false;
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
         Map<Integer, Integer> cartList = (Map<Integer, Integer>) session.getAttribute("cartList");
         try {
             DBManager.getInstance().setOrder(user.getId(), cartList);
             session.removeAttribute("cartList");
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-            exc = true;
+        } catch (SQLException | NullPointerException throwable) {
+            LOG.error("buy/thanks error", throwable);
+            req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
+
         }
-        req.setAttribute("exception", exc);
         try {
             doGet(req, resp);
         } catch (ServletException e) {

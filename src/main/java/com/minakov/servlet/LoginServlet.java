@@ -3,6 +3,8 @@ package com.minakov.servlet;
 
 import com.minakov.database.DBManager;
 import com.minakov.database.entity.User;
+import com.minakov.servlet.listener.ConfigListener;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +16,7 @@ import java.sql.SQLException;
 
 
 public class LoginServlet extends HttpServlet {
-
+    private static final Logger LOG = Logger.getLogger(ConfigListener.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -46,6 +48,7 @@ public class LoginServlet extends HttpServlet {
         try {
             user = DBManager.getInstance().getUser(req.getParameter("phone"));
         } catch (SQLException exception) {
+            LOG.error("login error", exception);
             req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
         }
 

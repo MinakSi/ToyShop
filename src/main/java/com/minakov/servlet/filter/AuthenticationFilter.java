@@ -8,7 +8,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-
+/**
+ * This filter realizes checking that the person that wants to
+ * be connected to admin pages is an admin.
+ *
+ * @author Serhii Minakov
+ */
 public class AuthenticationFilter implements Filter {
 
     @Override

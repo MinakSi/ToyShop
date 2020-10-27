@@ -3,20 +3,22 @@ package com.minakov.servlet;
 
 import com.minakov.database.DBManager;
 import com.minakov.database.entity.Product;
-import com.minakov.database.entity.User;
+import com.minakov.servlet.listener.ConfigListener;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 
 public class CatalogServlet extends HttpServlet {
 
     private final int AMOUNT_ON_PAGE = 2;
+    private static final Logger LOG = Logger.getLogger(ConfigListener.class);
 
 
     @Override
@@ -27,9 +29,9 @@ public class CatalogServlet extends HttpServlet {
     }
 
     @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         resp.setCharacterEncoding("UTF-8");
-        ArrayList<Product> products;
+        ArrayList<Product> products = null;
         int page = req.getParameter("page") == null?1:Integer.parseInt(req.getParameter("page"));
 
         if (req.getParameterMap().containsKey("sort") || req.getParameterMap().containsKey("+")
@@ -56,14 +58,26 @@ public class CatalogServlet extends HttpServlet {
             } else if (req.getParameter("-")!=null){
                 page--;
             }
-            products =  DBManager.getInstance().getProducts(sortProducts,
-                    (page-1)*AMOUNT_ON_PAGE, AMOUNT_ON_PAGE);
+            try {
+                products =  DBManager.getInstance().getProducts(sortProducts,
+                        (page-1)*AMOUNT_ON_PAGE, AMOUNT_ON_PAGE);
+            } catch (SQLException exception) {
+                LOG.error("catalog error", exception);
+                req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
+            }
             req.setAttribute("sortBy", req.getParameter("sortBy"));
         }else{
-            products =  DBManager.getInstance().getProducts(DBManager.SQL_ORDER_BY_ID,0,AMOUNT_ON_PAGE);
+            try {
+                products =  DBManager.getInstance().getProducts(DBManager.SQL_ORDER_BY_ID,0,AMOUNT_ON_PAGE);
+            } catch (SQLException exception) {
+                LOG.error("catalog error", exception);
+                req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
+            }
             req.setAttribute("sortBy", "id");
         }
-        req.setAttribute("full", products.size() > 0);
+        if (products!=null){
+            req.setAttribute("full", products.size() > 0);
+        }
         req.setAttribute("products", products);
         req.setAttribute("page", page);
         try {

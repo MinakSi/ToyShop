@@ -68,13 +68,7 @@
 
 <div class="container-fluid" id="main_pets">
     <div class="container-fluid row justify-content-center main_pets_wrapper">
-        <c:if test="${exception}">
-            <h1 class="main_pets_h col-4">Ошибка заказа. Повторите попытку позже :(</h1>
-        </c:if>
-        <c:if test="${!exception}">
-            <h1 class="main_pets_h col-4">Спасибо за покупку!</h1>
-        </c:if>
-
+        <h1 class="main_pets_h col-4">Спасибо за покупку!</h1>
     </div>
 </div>
 

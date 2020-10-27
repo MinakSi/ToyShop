@@ -30,15 +30,21 @@ public class AdminOrderServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         resp.setCharacterEncoding("UTF-8");
-        Order order = DBManager.getInstance().getOrder(req.getParameter("order_id"));
+        Order order = null;
+        try {
+            order = DBManager.getInstance().getOrder(req.getParameter("order_id"));
+        } catch (SQLException exception) {
+            LOG.error("admin order error", exception);
+            req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
+        }
         if (req.getParameter("commitSaves")!=null) {
             if (req.getParameter("invoiceInput")!=null){
                 try {
                     DBManager.getInstance().setInvoice(order.getId(), req.getParameter("invoiceInput"));
                 } catch (SQLException throwable) {
                     req.setAttribute("invoice",req.getParameter("invoice"));
-                    req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
                     LOG.error("admin order error", throwable);
+                    req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
                 }
             }
             int newStatus;
@@ -60,30 +66,36 @@ public class AdminOrderServlet extends HttpServlet {
             }
             try {
                 DBManager.getInstance().updateOrderStatus(order.getId(), newStatus);
-
+                order = DBManager.getInstance().getOrder(req.getParameter("order_id"));
             } catch (SQLException exception) {
-                req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
                 LOG.error("admin order error", exception);
+                req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
             }
-            order = DBManager.getInstance().getOrder(req.getParameter("order_id"));
+
         }
         User user = null;
         try {
             user = DBManager.getInstance().getUser(req.getParameter("user_phone"));
         } catch (SQLException exception) {
-            req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
             LOG.error("admin order error", exception);
+            req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
         }
         if (req.getParameter("blockUser")!=null && user!=null){
             try {
                 DBManager.getInstance().blockUser(user.getId());
             } catch (SQLException exception) {
-                req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
                 LOG.error("admin order error", exception);
+                req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
             }
         }
 
-        ArrayList<Product> products = DBManager.getInstance().getOrderDetails(order.getId());
+        ArrayList<Product> products = null;
+        try {
+            products = DBManager.getInstance().getOrderDetails(order.getId());
+        } catch (SQLException exception) {
+            LOG.error("admin order error", exception);
+            req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
+        }
         req.setAttribute("order", order);
         req.setAttribute("products", products);
         req.setAttribute("client", user);

@@ -56,16 +56,7 @@
     <servlet-name>Cart</servlet-name>
     <servlet-class>com.minakov.servlet.CartServlet</servlet-class>
   </servlet>
-  <!--Главная-->
-  <servlet-mapping>
-    <servlet-name>Main</servlet-name>
-    <url-pattern>/main</url-pattern>
-  </servlet-mapping>
 
-  <servlet>
-    <servlet-name>Main</servlet-name>
-    <servlet-class>com.minakov.servlet.MainServlet</servlet-class>
-  </servlet>
   <!--Кабинет-->
   <servlet-mapping>
     <servlet-name>Account</servlet-name>

@@ -2,7 +2,8 @@ package com.minakov.servlet;
 
 
 import com.minakov.database.DBManager;
-import com.minakov.database.entity.User;
+import com.minakov.servlet.listener.ConfigListener;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +15,7 @@ import java.sql.SQLException;
 
 
 public class RegistrationServlet extends HttpServlet {
-
+    private static final Logger LOG = Logger.getLogger(ConfigListener.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -43,10 +44,9 @@ public class RegistrationServlet extends HttpServlet {
             } else {
                 doGet(req, resp);
             }
-        } catch (ServletException e) {
-            e.printStackTrace();
         } catch (SQLException exception) {
-            req.getRequestDispatcher("view/errorPage.jsp").forward(req, resp);
+            LOG.error("registration error", exception);
+            req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
         }
 
     }

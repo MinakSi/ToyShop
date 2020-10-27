@@ -2,8 +2,8 @@ package com.minakov.servlet;
 
 
 import com.minakov.database.DBManager;
-import com.minakov.database.entity.Product;
-import com.minakov.database.entity.User;
+import com.minakov.servlet.listener.ConfigListener;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,11 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.Map;
 
 
 public class AboutServlet extends HttpServlet {
+    private static final Logger LOG = Logger.getLogger(ConfigListener.class);
 
 
     @Override
@@ -26,9 +27,14 @@ public class AboutServlet extends HttpServlet {
     }
 
     @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         resp.setCharacterEncoding("UTF-8");
-        req.setAttribute("product",DBManager.getInstance().getProduct(req.getParameter("product_id")));
+        try {
+            req.setAttribute("product",DBManager.getInstance().getProduct(req.getParameter("product_id")));
+        } catch (SQLException exception) {
+            LOG.error("about product error", exception);
+            req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
+        }
         HttpSession session = req.getSession();
         Map<Integer, Integer> cartList = (Map<Integer, Integer>) session.getAttribute("cartList");
         int productAmount;
