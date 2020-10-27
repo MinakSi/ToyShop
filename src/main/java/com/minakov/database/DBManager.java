@@ -14,7 +14,6 @@ import javax.sql.DataSource;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.sql.*;
 import java.util.ArrayList;
@@ -22,7 +21,15 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ *  This class realizes manipulations with DB. It makes any query executions or updates.
+ *  Singleton.
+ *
+ * @author Serhii Minakov
+ */
+
 public class DBManager {
+
     private static DBManager dbManager;
     private static final String INTERRUPT = "Interrupted!";
     @Resource(name = "jdbc/toyshop_db")
@@ -57,6 +64,7 @@ public class DBManager {
     public static final String SQL_ORDER_BY_NAME_DESC = " ORDER BY name DESC";
     public static final String SQL_ORDER_BY_ID = " ORDER BY id";
     private static final String SQL_LIMIT = " LIMIT ?, ?";
+    private static final String IMAGE_PATH = "C:\\Users\\Lenovo\\IdeaProjects\\finalProject\\src\\main\\webapp\\view\\img";
 
 
     private DBManager() {
@@ -70,6 +78,7 @@ public class DBManager {
         return dbManager;
     }
 
+
     public Connection getConnection() throws SQLException, NamingException {
         Context context = new InitialContext();
         ds = (DataSource) context.lookup("java:comp/env/jdbc/toyshop_db");
@@ -77,6 +86,14 @@ public class DBManager {
         return ds.getConnection();
     }
 
+    /**
+     * Gives you a user row from DB.
+     *
+     * @param phone phone number of the user, you want to get
+     * @return User object
+     * @throws SQLException if failure
+     * @see User
+     */
     public User getUser(String phone) throws SQLException {
         User user = null;
         try (
@@ -100,7 +117,13 @@ public class DBManager {
         }
         return user;
     }
-
+    /**
+     * Inserts a user row to DB.
+     *
+     * @param phone phone number of the user, you want to get
+     * @throws SQLException if failure
+     * @see User
+     */
     public void setUser(String name, String secondName, String email, String phone, String address, String pass) throws SQLException {
         try {
             Connection connection = getConnection();
@@ -116,6 +139,16 @@ public class DBManager {
             logger.log(Level.WARNING, INTERRUPT, e);
         }
     }
+
+    /**
+     * Gives you some product rows from DB.
+     *
+     * @param order sorting order
+     * @param limitLow how many rows will be skipped after query
+     * @param limitMax how many rows will be returned
+     * @return ArrayList of Product
+     * @see Product
+     */
 
     public ArrayList<Product> getProducts(String order, int limitLow, int limitMax) {
         ArrayList<Product> products = new ArrayList<>();
@@ -138,6 +171,14 @@ public class DBManager {
         return products;
     }
 
+    /**
+     * Gives you a product row from DB
+     *
+     * @param id - id of product, you want to be selected
+     * @return Product object
+     * @see Product
+     */
+
     public Product getProduct(String id) {
         Product product = null;
         try (
@@ -157,6 +198,15 @@ public class DBManager {
         }
         return product;
     }
+
+    /**
+     * Gives you an Order row from DB
+     *
+     * @param id - id of an order, you want to be selected
+     * @return Order object
+     * @see Order
+     */
+
     public Order getOrder(String id) {
         Order order = null;
         try (
@@ -182,7 +232,15 @@ public class DBManager {
         return order;
     }
 
-
+    /**
+     * Inserts new Order and order_product rows to DB.
+     * Includes transaction.
+     *
+     * @param userId - id of user, whose order it is
+     * @param products - Map, which consists of product id and amount
+     *                 of this product in the order.
+     * @throws SQLException if failure
+     */
     public void setOrder(int userId, Map<Integer, Integer> products) throws SQLException {
         Connection connection = null;
         try {
@@ -213,6 +271,17 @@ public class DBManager {
             connection.close();
         }
     }
+
+    /**
+     * Inserts new Product into DB.
+     * Puts an image of the product into direct package,
+     * described in static constant IMAGE_PATH
+     *
+     * @param part  a form item that was received within a multipart/form-data POST request.
+     * @param product - Product object, which will be inserted
+     * @throws SQLException if failure
+     * @see Product
+     */
     public void setProduct(Part part, Product product) throws SQLException {
         Connection connection = null;
         try{
@@ -225,7 +294,7 @@ public class DBManager {
             statement.setInt(4, product.getAmountOnStorage());
             statement.executeUpdate();
             String fileName = URLDecoder.decode(part.getSubmittedFileName(), "UTF-8");
-            File uploads = new File("C:\\Users\\Lenovo\\IdeaProjects\\finalProject\\src\\main\\webapp\\view\\img" + File.separator + fileName);
+            File uploads = new File(IMAGE_PATH + File.separator + fileName);
             uploads.getParentFile().mkdirs();
             InputStream fileContent = part.getInputStream();
             java.nio.file.Files.copy(fileContent, uploads.toPath());
@@ -240,6 +309,14 @@ public class DBManager {
         }
 
     }
+
+    /**
+     * Inserts a new invoice number to existed order into DB
+     *
+     * @param id - order id
+     * @param invoice - invoice number
+     * @throws SQLException if failure
+     */
     public void setInvoice(int id, String invoice) throws SQLException {
         try {
             Connection connection = getConnection();
@@ -251,6 +328,13 @@ public class DBManager {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Blocks a user on DB level.
+     *
+     * @param id - id of user, who will be bocked
+     * @throws SQLException if failure
+     */
     public void blockUser(int id) throws SQLException {
         try {
             Connection connection = getConnection();
@@ -261,6 +345,15 @@ public class DBManager {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Sets new order status to an order in DB.
+     *
+     * @param id - order id
+     * @param status - status id
+     * @throws SQLException if failure
+     */
+
     public void updateOrderStatus(int id, int status) throws SQLException {
         try {
             Connection connection = getConnection();
@@ -273,7 +366,16 @@ public class DBManager {
         }
     }
 
-    public ArrayList<Order> getUserOrders(int userId) {
+    /**
+     * Gets all user's orders
+     *
+     * @param userId - id of a user
+     * @return Array List of Orders
+     * @see Order
+     * @throws SQLException if failure
+     */
+
+    public ArrayList<Order> getUserOrders(int userId) throws SQLException {
         ArrayList<Order> orders = new ArrayList<>();
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_ORDERS)) {
@@ -292,12 +394,19 @@ public class DBManager {
                             ));
                 }
             }
-        } catch (SQLException | NamingException e) {
+        } catch (NamingException e) {
             logger.log(Level.WARNING, INTERRUPT, e);
         }
         return orders;
     }
-    public ArrayList<Order> getAllOrders() {
+    /**
+     * Gets all the existed orders
+     *
+     * @return Array List of Orders
+     * @see Order
+     * @throws SQLException if failure
+     */
+    public ArrayList<Order> getAllOrders() throws SQLException {
         ArrayList<Order> orders = new ArrayList<>();
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_FIND_ALL_ORDERS)) {
@@ -315,11 +424,19 @@ public class DBManager {
                     ));
                 }
             }
-        } catch (SQLException | NamingException e) {
+        } catch (NamingException e) {
             logger.log(Level.WARNING, INTERRUPT, e);
         }
         return orders;
     }
+
+    /**
+     * Gets products, which are included in an order
+     *
+     * @param orderId - id of an order
+     * @return Array List of Products
+     * @see Product
+     */
 
     public ArrayList<Product> getOrderDetails(int orderId) {
         ArrayList<Product> products = new ArrayList<>();

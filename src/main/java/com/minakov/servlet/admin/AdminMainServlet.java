@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -40,7 +41,12 @@ public class AdminMainServlet extends HttpServlet {
                 e.printStackTrace();
             }
         }
-        ArrayList<Order> orders = DBManager.getInstance().getAllOrders();
+        ArrayList<Order> orders = null;
+        try {
+            orders = DBManager.getInstance().getAllOrders();
+        } catch (SQLException exception) {
+            //todo error page, log
+        }
         orders.sort(Order.orderIdDec);
         session.setAttribute("orders", orders);
 

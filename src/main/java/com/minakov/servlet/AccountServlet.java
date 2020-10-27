@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 
@@ -41,7 +42,13 @@ public class AccountServlet extends HttpServlet {
             }
         }
         User user = (User)session.getAttribute("user");
-        ArrayList<Order> orders = DBManager.getInstance().getUserOrders(user.getId());
+        ArrayList<Order> orders = null;
+        try {
+            orders = DBManager.getInstance().getUserOrders(user.getId());
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            //todo: error page, log
+        }
         session.setAttribute("orders", orders);
 
         try {
