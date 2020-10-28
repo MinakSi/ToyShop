@@ -1,12 +1,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+<c:if test="${locale eq 'ru'}">
+    <fmt:setLocale value="ru"/>
+</c:if>
+<fmt:bundle basename="prop" prefix="order.">
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <style type="text/css">
-        <%@include file="main.css"%>
+        <%@include file="css/main.css"%>
     </style>
-    <title>Заказ №${order_id}</title>
+    <title><fmt:message key="h"/> №${order_id}</title>
 </head>
 <body>
 
@@ -21,9 +26,21 @@
         </button>
         <div class="collapse navbar-collapse col-6 offset-2 justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
+                <form action="${pageContext.request.contextPath}/order" method="post">
+                    <li class="nav-item">
+                        <input class="nav-link li_button" name="rus" type="submit" value="Ru"
+                               style="color:#545454;">
+                    </li>
+                </form>
+                <form action="${pageContext.request.contextPath}/order" method="post">
+                    <li class="nav-item">
+                        <input class="nav-link li_button" name="eng" type="submit" value="Eng"
+                               style="color:#545454;">
+                    </li>
+                </form>
                 <form action="${pageContext.request.contextPath}/catalog" method="post">
                     <li class="nav-item">
-                        <input class="nav-link" type="submit" value="Каталог"
+                        <input class="nav-link" type="submit" value="<fmt:message key="catalog"/>"
                                style="border: none;
                                     outline: none;
                                      background-color: #fafafa;
@@ -33,14 +50,14 @@
                 </form>
                 <form action="${pageContext.request.contextPath}/cart" method="post">
                     <li class="nav-item">
-                        <input class="nav-link li_button" type="submit" value="Корзина"
+                        <input class="nav-link li_button" type="submit" value="<fmt:message key="cart"/>"
                                style="color:#545454;">
                     </li>
                 </form>
                 <c:if test="${!empty(user)}">
                     <form action="${pageContext.request.contextPath}/account" method="post">
                         <li class="nav-item">
-                            <input class="nav-link li_button" type="submit" value="Мой кабинет"
+                            <input class="nav-link li_button" type="submit" value="<fmt:message key="account"/>"
                                    style="color:#545454;">
                         </li>
                     </form>
@@ -48,7 +65,7 @@
                 <c:if test="${empty(user)}">
                     <form action="${pageContext.request.contextPath}/">
                         <li class="nav-item">
-                            <input class="nav-link li_button" type="submit" value="Войти"
+                            <input class="nav-link li_button" type="submit" value="<fmt:message key="login"/>"
                                    style="color:#545454;">
                         </li>
                     </form>
@@ -60,17 +77,17 @@
 
 <div class="container-fluid" id="main_pets">
     <div class="container-fluid row justify-content-center main_pets_wrapper">
-        <p class="main_pets_h col-4 ">Заказ № ${order_id}</p>
+        <p class="main_pets_h col-4 "><fmt:message key="h"/> № ${order_id}</p>
     </div>
     <form action="${pageContext.request.contextPath}/account" method="post">
-        <input  class="bttn_gettoknow bttn" type="submit" value="назад">
+        <input  class="bttn_gettoknow bttn" type="submit" value="<fmt:message key="back"/>">
     </form>
     <table class="table">
         <tr>
-            <th>id товара</th>
-            <th>Название</th>
-            <th>Количество</th>
-            <th>Цена</th>
+            <th><fmt:message key="order_id"/></th>
+            <th><fmt:message key="name"/></th>
+            <th><fmt:message key="amount"/></th>
+            <th><fmt:message key="price"/></th>
         </tr>
         <c:forEach items="${products}" var="p">
             <tr>
@@ -81,9 +98,10 @@
             </tr>
         </c:forEach>
     </table>
-    <div class="total">total = ${order_total}</div>
+    <div class="total"><fmt:message key="total"/> = ${order_total}</div>
 
 </div>
 
 </body>
+</fmt:bundle>
 </html>

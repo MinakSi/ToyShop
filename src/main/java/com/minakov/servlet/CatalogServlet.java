@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class CatalogServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         resp.setCharacterEncoding("UTF-8");
+//        req.setAttribute("rus",true);
         ArrayList<Product> products = null;
         int page = req.getParameter("page") == null?1:Integer.parseInt(req.getParameter("page"));
 
@@ -80,6 +82,12 @@ public class CatalogServlet extends HttpServlet {
         }
         req.setAttribute("products", products);
         req.setAttribute("page", page);
+        HttpSession session = req.getSession();
+//        if (session.getAttribute("locale")==null){
+//            session.setAttribute("locale", "ru");
+//        }
+        req.setAttribute("test_lang", session.getAttribute("locale"));
+
         try {
             doGet(req, resp);
         } catch (ServletException e) {

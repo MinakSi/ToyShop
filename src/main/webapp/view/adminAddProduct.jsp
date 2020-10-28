@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <style type="text/css">
-        <%@include file="main.css"%>
+        <%@include file="css/main.css"%>
     </style>
     <title>Admin add product</title>
 </head>
@@ -29,7 +29,7 @@
                                                       cursor: pointer;">
                     </li>
                 </form>
-                <form action="${pageContext.request.contextPath}/admin/logout" method="get">
+                <form action="${pageContext.request.contextPath}/logout" method="get">
                     <li class="nav-item">
                         <input class="nav-link li_button" name="logout" type="submit" value="Выйти"
                                style="color:#545454;">

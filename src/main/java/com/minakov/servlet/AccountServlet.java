@@ -32,11 +32,11 @@ public class AccountServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         resp.setCharacterEncoding("UTF-8");
         HttpSession session = req.getSession();
-        if ("logout".equals(req.getParameter("logout"))){
-            session.invalidate();
-            req.getRequestDispatcher("catalog").forward(req,resp);
-            return;
-        }
+//        if ("logout".equals(req.getParameter("logout"))){
+//            session.invalidate();
+//            req.getRequestDispatcher("catalog").forward(req,resp);
+//            return;
+//        }
         User user = (User)session.getAttribute("user");
         ArrayList<Order> orders = null;
         try {

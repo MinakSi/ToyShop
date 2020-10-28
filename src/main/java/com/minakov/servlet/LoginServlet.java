@@ -51,15 +51,18 @@ public class LoginServlet extends HttpServlet {
             LOG.error("login error", exception);
             req.getRequestDispatcher("/view/errorPage.jsp").forward(req, resp);
         }
-
+        HttpSession session = req.getSession();
         try {
             String pass = req.getParameter("password");
             req.setAttribute("loggedIn", pass.equals(user.getPassword()));
-            HttpSession session = req.getSession();
             session.setAttribute("user", user);
         } catch (NullPointerException e){
             req.setAttribute("loggedIn", false);
         }
+//        if (session.getAttribute("locale")==null){
+            session.setAttribute("locale", "ru");
+//        }
+//        req.setAttribute("locales", session.getAttribute("locale"));
 
         try {
             doGet(req, resp);

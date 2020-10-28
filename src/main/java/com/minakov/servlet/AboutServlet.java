@@ -46,6 +46,7 @@ public class AboutServlet extends HttpServlet {
         req.setAttribute("productAmount", productAmount);
 
 
+
         try {
             doGet(req, resp);
         } catch (ServletException e) {
